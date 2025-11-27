@@ -1,7 +1,7 @@
 
-public class Orco extends Bestia {
+public class Trasgo extends Bestia {
 
-	public Orco(String nombre, int p_Vida, int nivelArmadura, int p_Daño) {
+	public Trasgo(String nombre, int p_Vida, int nivelArmadura, int p_Daño) {
 		super(nombre, p_Vida, nivelArmadura, p_Daño);
 		// TODO Auto-generated constructor stub
 	}
@@ -13,17 +13,17 @@ public class Orco extends Bestia {
 	 */
 	@Override
 	public int atacar(Personaje heroe) {
-		int potencia = 0 + fuerza(heroe);
+		int potencia = 0 + miedo(heroe);
 		return potencia;
 	}
 
 	/**
-	 * Añade +10% de la armadura del heroe
+	 * Añade +5 si el Heroe es un Hobbit
 	 * 
 	 * @param heroe
-	 * @return 10% de la armadura del heroe
+	 * @return 5 si el Heroe es un Hobbit, sino 0
 	 */
-	public int fuerza(Personaje heroe) {
+	public int miedo(Personaje heroe) {
 		return 0;
 	}
 
