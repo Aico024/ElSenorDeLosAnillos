@@ -13,7 +13,7 @@ public abstract class Bestia extends Personaje {
 	 */
 	@Override
 	public int atacar(Personaje heroe) {
-		int potencia = 0;
+		int potencia = (int) (Math.random() * 91);
 		return potencia;
 
 	}

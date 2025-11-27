@@ -13,9 +13,10 @@ public abstract class Heroe extends Personaje {
 	 */
 	@Override
 	public int atacar(Personaje bestia) {
-		int potencia = 0;
+		int dado1 = (int) (Math.random() * 101);
+		int dado2 = (int) (Math.random() * 101);
+		int potencia = dado1 + dado2;
 		return potencia;
-
 	}
 
 }

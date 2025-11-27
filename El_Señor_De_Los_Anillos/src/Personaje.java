@@ -50,7 +50,11 @@ public abstract class Personaje {
 	 * @return el daño real infligido
 	 */
 	public int recibirDaño(int potenciaAtaque) {
-		int dañoReal = 0;
+		int dañoReal = potenciaAtaque - this.NivelArmadura;
+		if (dañoReal < 0) {
+			dañoReal = 0;
+		}
+		this.P_Vida -= dañoReal;
 		return dañoReal;
 	}
 

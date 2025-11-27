@@ -6,16 +6,4 @@ public class Hobbit extends Heroe {
 		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * Calcula los puntos de daño
-	 * 
-	 * @return puntos de daño
-	 */
-	@Override
-	public int atacar(Personaje bestia) {
-		int potencia = 0;
-		return potencia;
-
-	}
-
 }

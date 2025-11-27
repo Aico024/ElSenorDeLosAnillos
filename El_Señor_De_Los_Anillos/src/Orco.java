@@ -13,7 +13,8 @@ public class Orco extends Bestia {
 	 */
 	@Override
 	public int atacar(Personaje heroe) {
-		int potencia = 0 + fuerza(heroe);
+		int dado1 = (int) (Math.random() * 91);
+		int potencia = dado1 + fuerza(heroe);
 		return potencia;
 	}
 

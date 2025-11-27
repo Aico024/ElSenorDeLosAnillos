@@ -13,7 +13,10 @@ public class Elfo extends Heroe {
 	 */
 	@Override
 	public int atacar(Personaje bestia) {
-		int potencia = 0 + rabia(bestia);
+		int dado1 = (int) (Math.random() * 101);
+		int dado2 = (int) (Math.random() * 101);
+		int rabia = rabia(bestia);
+		int potencia = dado1 + dado2 + rabia;
 		return potencia;
 
 	}
