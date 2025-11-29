@@ -1,6 +1,7 @@
 
 public abstract class Bestia extends Personaje {
-
+	protected static final int MAX_DADO_BESTIA = 91;
+	
 	public Bestia(String nombre, int p_Vida, int nivelArmadura) {
 		super(nombre, p_Vida, nivelArmadura);
 		// TODO Auto-generated constructor stub
@@ -13,7 +14,7 @@ public abstract class Bestia extends Personaje {
 	 */
 	@Override
 	public int atacar(Personaje heroe) {
-		int potencia = (int) (Math.random() * 91);
+		int potencia = (int) (Math.random() * MAX_DADO_BESTIA);
 		return potencia;
 
 	}

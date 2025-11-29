@@ -4,10 +4,10 @@ public class Batalla {
 	private Ejercito buenos;
 	private Ejercito malos;
 
-	public Batalla(Ejercito buenos, Ejercito malos) {
+	public Batalla(Ejercito Buenos, Ejercito Malos) {
 		super();
-		this.buenos = buenos;
-		this.malos = malos;
+		this.buenos = Buenos;
+		this.malos = Malos;
 	}
 
 	// Getters
@@ -54,7 +54,8 @@ public class Batalla {
 		}
 
 		// Eliminar personajes muertos
-		eliminarMuertos();
+		eliminarMuertosDeEjercito(buenos.getEjercito());
+		eliminarMuertosDeEjercito(malos.getEjercito());
 		System.out.println();
 	}
 
@@ -93,25 +94,18 @@ public class Batalla {
 	}
 
 	/**
-	 * Elimina los personajes muertos de ambos ejércitos
+	 * Método auxiliar que elimina los personajes muertos de un ejército
+	 * 
+	 * @param ejercito el ArrayList de personajes a revisar
 	 */
-	private void eliminarMuertos() {
-		// Eliminar muertos del ejército de héroes
-				for (int i = buenos.getEjercito().size() - 1; i >= 0; i--) {
-					Personaje p = buenos.getEjercito().get(i);
-					if (!p.estaVivo()) {
-						System.out.println(" ¡Muere " + p.getTipo() + " " + p.getNombre() + "!");
-						buenos.getEjercito().remove(i);
-					}
-				}
-
-				// Eliminar muertos del ejército de bestias
-				for (int i = malos.getEjercito().size() - 1; i >= 0; i--) {
-					Personaje p = malos.getEjercito().get(i);
-					if (!p.estaVivo()) {
-						System.out.println(" ¡Muere " + p.getTipo() + " " + p.getNombre() + "!");
-						malos.getEjercito().remove(i);
-					}
-				}
+	private void eliminarMuertosDeEjercito(ArrayList<Personaje> ejercito) {
+		// Recorremos de atrás hacia adelante para evitar problemas al eliminar
+		for (int i = ejercito.size() - 1; i >= 0; i--) {
+			Personaje p = ejercito.get(i);
+			if (!p.estaVivo()) {
+				System.out.println(" ¡Muere " + p.getTipo() + " " + p.getNombre() + "!");
+				ejercito.remove(i);
+			}
+		}
 	}
 }

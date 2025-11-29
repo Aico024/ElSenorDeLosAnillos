@@ -4,10 +4,10 @@ public class Ejercito {
 	private String tipo;
 	private ArrayList<Personaje> ejercito = new ArrayList<Personaje>();
 
-	public Ejercito(String tipo, ArrayList<Personaje> ejercito) {
+	public Ejercito(String Tipo, ArrayList<Personaje> Ejercito) {
 		super();
-		this.tipo = tipo;
-		this.ejercito = ejercito;
+		this.tipo = Tipo;
+		this.ejercito = Ejercito;
 	}
 
 	// Getters
