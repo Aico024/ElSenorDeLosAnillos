@@ -27,6 +27,7 @@ public class Hobbit extends Heroe {
 	 */
 	public int miedo(Personaje bestia) {
 		if (bestia instanceof Trasgo) {
+			System.out.println("-5 de P.Daño por miedo a Trasgos");
 			return 5;
 		}else {
 			return 0;

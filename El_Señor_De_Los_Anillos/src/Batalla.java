@@ -27,7 +27,7 @@ public class Batalla {
 		System.out.println("=== COMIENZA LA BATALLA ===\n");
 
 		while (!buenos.getEjercito().isEmpty() && !malos.getEjercito().isEmpty()) {
-			System.out.println("Cominexa el turno " + turno + ":");
+			System.out.println("COMIENZA EL TURNO  " + turno + ":");
 			iniTurno();
 			System.out.println();
 			turno++;
@@ -55,6 +55,7 @@ public class Batalla {
 
 		// Eliminar personajes muertos
 		eliminarMuertos();
+		System.out.println();
 	}
 
 	/**
@@ -64,22 +65,30 @@ public class Batalla {
 	 * @param bestia la bestia que combate
 	 */
 	private void realizarCombate(Personaje heroe, Personaje bestia) {
-		System.out.println(" Lucha entre " + heroe.getNombre() + " (Vida=" + heroe.getP_Vida() + " Armadura="
+		System.out.println("\n Lucha entre " + heroe.getNombre() + " (Vida=" + heroe.getP_Vida() + " Armadura="
 				+ heroe.getNivelArmadura() + ") y " + bestia.getNombre() + " (Vida=" + bestia.getP_Vida() + " Armadura="
 				+ bestia.getNivelArmadura() + ")");
 
 		// El héroe ataca
+		System.out.println("--------------------------------------------");
+		System.out.println(heroe.getNombre() + " ataca a " + bestia.getNombre());
 		int potenciaHeroe = heroe.atacar(bestia);
 		int danioHeroe = bestia.recibirDaño(potenciaHeroe);
 		System.out.println(" " + heroe.getNombre() + " saca " + potenciaHeroe + " y le quita " + danioHeroe
 				+ " de vida a " + bestia.getNombre());
+		System.out.println("--------------------------------------------");
+
 
 		// La bestia ataca (si aún está viva)
+		System.out.println("--------------------------------------------");
+		System.out.println(bestia.getNombre() + " ataca a " + heroe.getNombre());
 		if (bestia.estaVivo()) {
 			int potenciaBestia = bestia.atacar(heroe);
 			int danioBestia = heroe.recibirDaño(potenciaBestia);
 			System.out.println(" " + bestia.getNombre() + " saca " + potenciaBestia + " y le quita " + danioBestia
 					+ " de vida a " + heroe.getNombre());
+			System.out.println("--------------------------------------------");
+
 		}
 	}
 

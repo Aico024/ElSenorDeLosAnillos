@@ -29,6 +29,7 @@ public class Elfo extends Heroe {
 	 */
 	public int rabia(Personaje bestia) {
 		if (bestia instanceof Orco) {
+			System.out.println("+ 10 por odio ancestral hacia Orco");
 			return 10;
 		}else {
 			return 0;

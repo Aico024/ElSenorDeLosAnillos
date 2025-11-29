@@ -27,6 +27,7 @@ public class Orco extends Bestia {
 	public int fuerza(Personaje heroe) {
 		int aux = 0;
 		aux = (heroe.getNivelArmadura() / 10);
+		System.out.println(" + " + aux + " (10% de P.Armadura del heroe) por fuerza bruta");
 		return aux;
 	}
 
