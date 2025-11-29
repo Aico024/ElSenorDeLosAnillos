@@ -25,7 +25,11 @@ public class Trasgo extends Bestia {
 	 * @return 5 si el Heroe es un Hobbit, sino 0
 	 */
 	public int miedo(Personaje heroe) {
-		return 0;
+		if (heroe instanceof Hobbit) {
+			return 5;
+		}else {
+			return 0;
+		}
 	}
 
 }

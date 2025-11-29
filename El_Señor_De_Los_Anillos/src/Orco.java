@@ -25,7 +25,9 @@ public class Orco extends Bestia {
 	 * @return 10% de la armadura del heroe
 	 */
 	public int fuerza(Personaje heroe) {
-		return 0;
+		int aux = 0;
+		aux = (heroe.getNivelArmadura() / 10);
+		return aux;
 	}
 
 }

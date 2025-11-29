@@ -28,6 +28,10 @@ public class Elfo extends Heroe {
 	 * @return 10 si la Bestia es un Orco, sino 0
 	 */
 	public int rabia(Personaje bestia) {
-		return 0;
+		if (bestia instanceof Orco) {
+			return 10;
+		}else {
+			return 0;
+		}
 	}
 }
