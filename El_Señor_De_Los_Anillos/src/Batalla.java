@@ -23,14 +23,38 @@ public class Batalla {
 	 * Simula la batalla completa
 	 */
 	public void iniBatalla() {
-		
+		int turno = 1;
+		System.out.println("=== COMIENZA LA BATALLA ===\n");
+
+		while (!buenos.getEjercito().isEmpty() && !malos.getEjercito().isEmpty()) {
+			System.out.println("Cominexa el turno " + turno + ":");
+			iniTurno();
+			System.out.println();
+			turno++;
+			
+		}
 	}
 
 	/**
 	 * Inicia un turno de batalla
 	 */
 	private void iniTurno() {
-		
+		ArrayList<Personaje> ejercitoBuenos = buenos.getEjercito();
+		ArrayList<Personaje> ejercitoMalos = malos.getEjercito();
+
+		// Determinar cuántos combates habrá este turno
+		int numCombates = Math.min(ejercitoBuenos.size(), ejercitoMalos.size());
+
+		// Realizar todos los combates del turno
+		for (int i = 0; i < numCombates; i++) {
+			Personaje heroe = ejercitoBuenos.get(i);
+			Personaje bestia = ejercitoMalos.get(i);
+
+			realizarCombate(heroe, bestia);
+		}
+
+		// Eliminar personajes muertos
+		eliminarMuertos();
 	}
 
 	/**
@@ -40,13 +64,45 @@ public class Batalla {
 	 * @param bestia la bestia que combate
 	 */
 	private void realizarCombate(Personaje heroe, Personaje bestia) {
-		
+		System.out.println(" Lucha entre " + heroe.getNombre() + " (Vida=" + heroe.getP_Vida() + " Armadura="
+				+ heroe.getNivelArmadura() + ") y " + bestia.getNombre() + " (Vida=" + bestia.getP_Vida() + " Armadura="
+				+ bestia.getNivelArmadura() + ")");
+
+		// El héroe ataca
+		int potenciaHeroe = heroe.atacar(bestia);
+		int danioHeroe = bestia.recibirDaño(potenciaHeroe);
+		System.out.println(" " + heroe.getNombre() + " saca " + potenciaHeroe + " y le quita " + danioHeroe
+				+ " de vida a " + bestia.getNombre());
+
+		// La bestia ataca (si aún está viva)
+		if (bestia.estaVivo()) {
+			int potenciaBestia = bestia.atacar(heroe);
+			int danioBestia = heroe.recibirDaño(potenciaBestia);
+			System.out.println(" " + bestia.getNombre() + " saca " + potenciaBestia + " y le quita " + danioBestia
+					+ " de vida a " + heroe.getNombre());
+		}
 	}
 
 	/**
 	 * Elimina los personajes muertos de ambos ejércitos
 	 */
 	private void eliminarMuertos() {
-		
+		// Eliminar muertos del ejército de héroes
+				for (int i = buenos.getEjercito().size() - 1; i >= 0; i--) {
+					Personaje p = buenos.getEjercito().get(i);
+					if (!p.estaVivo()) {
+						System.out.println(" ¡Muere " + p.getTipo() + " " + p.getNombre() + "!");
+						buenos.getEjercito().remove(i);
+					}
+				}
+
+				// Eliminar muertos del ejército de bestias
+				for (int i = malos.getEjercito().size() - 1; i >= 0; i--) {
+					Personaje p = malos.getEjercito().get(i);
+					if (!p.estaVivo()) {
+						System.out.println(" ¡Muere " + p.getTipo() + " " + p.getNombre() + "!");
+						malos.getEjercito().remove(i);
+					}
+				}
 	}
 }
