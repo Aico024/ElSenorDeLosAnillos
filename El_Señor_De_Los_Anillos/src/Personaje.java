@@ -4,14 +4,12 @@ public abstract class Personaje {
 	private String Nombre;
 	private int P_Vida;
 	private int NivelArmadura;
-	private int P_Daño;
 
-	public Personaje(String nombre, int p_Vida, int nivelArmadura, int p_Daño) {
+	public Personaje(String nombre, int p_Vida, int nivelArmadura) {
 		super();
 		Nombre = nombre;
 		P_Vida = p_Vida;
 		NivelArmadura = nivelArmadura;
-		P_Daño = p_Daño;
 	}
 
 	// Getters
@@ -26,11 +24,7 @@ public abstract class Personaje {
 	public int getNivelArmadura() {
 		return NivelArmadura;
 	}
-
-	public int getP_Daño() {
-		return P_Daño;
-	}
-
+	
 	// Setter necesario para modificar la vida
 	public void setP_Vida(int p_Vida) {
 		P_Vida = p_Vida;

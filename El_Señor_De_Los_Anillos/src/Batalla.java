@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 public class Batalla {
 	private Ejercito buenos;
@@ -22,12 +23,14 @@ public class Batalla {
 	 * Simula la batalla completa
 	 */
 	public void iniBatalla() {
+		
 	}
 
 	/**
 	 * Inicia un turno de batalla
 	 */
 	private void iniTurno() {
+		
 	}
 
 	/**

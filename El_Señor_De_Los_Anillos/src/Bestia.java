@@ -1,8 +1,8 @@
 
 public abstract class Bestia extends Personaje {
 
-	public Bestia(String nombre, int p_Vida, int nivelArmadura, int p_Daño) {
-		super(nombre, p_Vida, nivelArmadura, p_Daño);
+	public Bestia(String nombre, int p_Vida, int nivelArmadura) {
+		super(nombre, p_Vida, nivelArmadura);
 		// TODO Auto-generated constructor stub
 	}
 
