@@ -1,3 +1,4 @@
+package modelo;
 
 public abstract class Bestia extends Personaje {
 	protected static final int MAX_DADO_BESTIA = 91;

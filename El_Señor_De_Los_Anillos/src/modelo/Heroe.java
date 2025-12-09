@@ -1,3 +1,4 @@
+package modelo;
 
 public abstract class Heroe extends Personaje {
     protected static final int MAX_DADO_HEROE = 101;

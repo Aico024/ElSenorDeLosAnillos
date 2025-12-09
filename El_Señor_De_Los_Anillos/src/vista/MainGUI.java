@@ -1,4 +1,4 @@
-package interfacesGUI;
+package vista;
 
 import java.awt.EventQueue;
 
@@ -24,6 +24,9 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JToggleButton;
+
+import modelo.*;
+import controlador.*;
 
 public class MainGUI extends JFrame {
 
