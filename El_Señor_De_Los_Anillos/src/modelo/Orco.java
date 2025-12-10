@@ -1,7 +1,7 @@
 package modelo;
 
 public class Orco extends Bestia {
-
+	private String ultimoMensaje = "";
 	public Orco(String nombre, int p_Vida, int nivelArmadura) {
 		super(nombre, p_Vida, nivelArmadura);
 		// TODO Auto-generated constructor stub
@@ -28,8 +28,12 @@ public class Orco extends Bestia {
 	public int fuerza(Personaje heroe) {
 		int aux = 0;
 		aux = (heroe.getNivelArmadura() / 10);
-		System.out.println(" + " + aux + " (10% de P.Armadura del heroe) por fuerza bruta");
+		ultimoMensaje =(" + " + aux + " (10% de P.Armadura del heroe) por fuerza bruta");
 		return aux;
+	}
+	
+	public String getUltimoMensaje() {
+		return ultimoMensaje;
 	}
 
 }

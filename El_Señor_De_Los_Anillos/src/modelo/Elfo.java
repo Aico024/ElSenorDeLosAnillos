@@ -1,6 +1,7 @@
 package modelo;
 
 public class Elfo extends Heroe {
+	private String ultimoMensaje = "";
 
 	public Elfo(String nombre, int p_Vida, int nivelArmadura) {
 		super(nombre, p_Vida, nivelArmadura);
@@ -30,10 +31,15 @@ public class Elfo extends Heroe {
 	 */
 	public int rabia(Personaje bestia) {
 		if (bestia instanceof Orco) {
-			System.out.println("+ 10 por odio ancestral hacia Orco");
+			ultimoMensaje = "+ 10 por odio ancestral hacia Orco";
 			return 10;
-		}else {
+		} else {
+			ultimoMensaje = "";
 			return 0;
 		}
+	}
+
+	public String getUltimoMensaje() {
+		return ultimoMensaje;
 	}
 }

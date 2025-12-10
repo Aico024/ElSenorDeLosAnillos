@@ -1,12 +1,13 @@
 package modelo;
 
 public class Hobbit extends Heroe {
+	private String ultimoMensaje = "";
 
 	public Hobbit(String nombre, int p_Vida, int nivelArmadura) {
 		super(nombre, p_Vida, nivelArmadura);
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	/**
 	 * Calcula los puntos de daño
 	 * 
@@ -19,7 +20,7 @@ public class Hobbit extends Heroe {
 		int potencia = dado1 + dado2 - miedo(bestia);
 		return potencia;
 	}
-	
+
 	/**
 	 * Resta 5 de p_Daño si la bestia es un Trasgo
 	 * 
@@ -28,10 +29,15 @@ public class Hobbit extends Heroe {
 	 */
 	public int miedo(Personaje bestia) {
 		if (bestia instanceof Trasgo) {
-			System.out.println("-5 de P.Daño por miedo a Trasgos");
+			ultimoMensaje = ("-5 de P.Daño por miedo a Trasgos");
 			return 5;
-		}else {
+		} else {
+			ultimoMensaje = ("");
 			return 0;
 		}
+	}
+
+	public String getUltimoMensaje() {
+		return ultimoMensaje;
 	}
 }

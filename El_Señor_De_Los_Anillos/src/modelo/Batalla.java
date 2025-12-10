@@ -4,11 +4,13 @@ import java.util.ArrayList;
 public class Batalla {
 	private Ejercito buenos;
 	private Ejercito malos;
+	private StringBuilder log;
+
 
 	public Batalla(Ejercito Buenos, Ejercito Malos) {
-		super();
 		this.buenos = Buenos;
 		this.malos = Malos;
+		this.log = new StringBuilder();
 	}
 
 	// Getters
@@ -19,21 +21,26 @@ public class Batalla {
 	public Ejercito getMalos() {
 		return malos;
 	}
+	
+	public String getLog() {
+		return log.toString();
+	}
 
 	/**
 	 * Simula la batalla completa
 	 */
 	public void iniBatalla() {
 		int turno = 1;
-		System.out.println("=== COMIENZA LA BATALLA ===\n");
+		log.append("=== COMIENZA LA BATALLA ===\n\n");
 
 		while (!buenos.getEjercito().isEmpty() && !malos.getEjercito().isEmpty()) {
-			System.out.println("COMIENZA EL TURNO  " + turno + ":");
+			log.append("COMIENZA EL TURNO " + turno + ":\n");
 			iniTurno();
-			System.out.println();
+			log.append("\n");
 			turno++;
 			
 		}
+		log.append("\n=== LA BATALLA HA TERMINADO ===\n");
 	}
 
 	/**
@@ -43,7 +50,7 @@ public class Batalla {
 		ArrayList<Personaje> ejercitoBuenos = buenos.getEjercito();
 		ArrayList<Personaje> ejercitoMalos = malos.getEjercito();
 
-		// Determinar cuántos combates habrá este turno
+		// Determinar cuantos combates habra este turno
 		int numCombates = Math.min(ejercitoBuenos.size(), ejercitoMalos.size());
 
 		// Realizar todos los combates del turno
@@ -57,54 +64,86 @@ public class Batalla {
 		// Eliminar personajes muertos
 		eliminarMuertosDeEjercito(buenos.getEjercito());
 		eliminarMuertosDeEjercito(malos.getEjercito());
-		System.out.println();
+		log.append("\n");
 	}
 
 	/**
 	 * Realiza un combate individual entre dos personajes
 	 * 
-	 * @param heroe  el héroe que combate
+	 * @param heroe  el heroe que combate
 	 * @param bestia la bestia que combate
 	 */
 	private void realizarCombate(Personaje heroe, Personaje bestia) {
-		System.out.println("\n Lucha entre " + heroe.getNombre() + " (Vida=" + heroe.getP_Vida() + " Armadura="
+		String combate = ("\n Lucha entre " + heroe.getNombre() + " (Vida=" + heroe.getP_Vida() + " Armadura="
 				+ heroe.getNivelArmadura() + ") y " + bestia.getNombre() + " (Vida=" + bestia.getP_Vida() + " Armadura="
-				+ bestia.getNivelArmadura() + ")");
-
-		// El héroe ataca
-		System.out.println("--------------------------------------------");
-		System.out.println(heroe.getNombre() + " ataca a " + bestia.getNombre());
+				+ bestia.getNivelArmadura() + ")\n");
+		log.append(combate);
+		
+		// El heroe ataca
+		log.append("--------------------------------------------\n");
+		String combateH =(heroe.getNombre() + " ataca a " + bestia.getNombre());
+		log.append(combateH);
 		int potenciaHeroe = heroe.atacar(bestia);
+		String mensajeEspecialHeroe = obtenerMensajeEspecial(heroe);
 		int danioHeroe = bestia.recibirDaño(potenciaHeroe);
-		System.out.println(" " + heroe.getNombre() + " saca " + potenciaHeroe + " y le quita " + danioHeroe
-				+ " de vida a " + bestia.getNombre());
-		System.out.println("--------------------------------------------");
+		String resultadoH = " " + heroe.getNombre() + " saca " + potenciaHeroe + " y le quita " + danioHeroe
+				+ " de vida a " + bestia.getNombre() + "\n";
+		
+		if (!mensajeEspecialHeroe.isEmpty()) {
+			resultadoH += " " + mensajeEspecialHeroe;
+		}
+		log.append(resultadoH);
+		log.append("--------------------------------------------\n");
 
 
-		// La bestia ataca (si aún está viva)
-		System.out.println("--------------------------------------------");
-		System.out.println(bestia.getNombre() + " ataca a " + heroe.getNombre());
+		// La bestia ataca (si aun esta viva)
+		log.append("--------------------------------------------\n");
+		String combateB = (bestia.getNombre() + " ataca a " + heroe.getNombre());
+		log.append(combateB);
 		if (bestia.estaVivo()) {
 			int potenciaBestia = bestia.atacar(heroe);
+			String mensajeEspecialBestia = obtenerMensajeEspecial(bestia);
 			int danioBestia = heroe.recibirDaño(potenciaBestia);
-			System.out.println(" " + bestia.getNombre() + " saca " + potenciaBestia + " y le quita " + danioBestia
-					+ " de vida a " + heroe.getNombre());
-			System.out.println("--------------------------------------------");
+			String resultadoBestia = " " + bestia.getNombre() + " saca " + potenciaBestia + " y le quita " + danioBestia
+					+ " de vida a " + heroe.getNombre() + "\n";
+			if (!mensajeEspecialBestia.isEmpty()) {
+				resultadoBestia += " " + mensajeEspecialBestia;
+			}
+			log.append(resultadoBestia);
+			log.append("--------------------------------------------\n");
 
 		}
 	}
+	
+	/**
+	 * Obtiene el mensaje especial de un personaje si tiene uno
+	 * 
+	 * @param personaje el personaje del que obtener el mensaje
+	 * @return el mensaje especial o una cadena vacia
+	 */
+	private String obtenerMensajeEspecial(Personaje personaje) {
+		if (personaje instanceof Elfo) {
+			return ((Elfo) personaje).getUltimoMensaje() + "\n";
+		} else if (personaje instanceof Hobbit) {
+			return ((Hobbit) personaje).getUltimoMensaje() + "\n";
+		} else if (personaje instanceof Orco) {
+			return ((Orco) personaje).getUltimoMensaje() + "\n";
+		}
+		return "";
+	}
 
 	/**
-	 * Método auxiliar que elimina los personajes muertos de un ejército
+	 * Metodo auxiliar que elimina los personajes muertos de un ejercito
 	 * 
 	 * @param ejercito el ArrayList de personajes a revisar
 	 */
 	private void eliminarMuertosDeEjercito(ArrayList<Personaje> ejercito) {
-		// Recorremos de atrás hacia adelante para evitar problemas al eliminar
+		// Recorremos de atras hacia adelante para evitar problemas al eliminar
 		for (int i = ejercito.size() - 1; i >= 0; i--) {
 			Personaje p = ejercito.get(i);
 			if (!p.estaVivo()) {
-				System.out.println(" ¡Muere " + p.getTipo() + " " + p.getNombre() + "!");
+				String muerte = (" ¡Muere " + p.getTipo() + " " + p.getNombre() + "!");
+				log.append(muerte);
 				ejercito.remove(i);
 			}
 		}

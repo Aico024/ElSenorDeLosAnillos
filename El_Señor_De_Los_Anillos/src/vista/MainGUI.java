@@ -9,6 +9,7 @@ import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 
 import java.awt.BorderLayout;
@@ -18,7 +19,8 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Cursor;
 import java.awt.Label;
-import java.awt.Button;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JTextArea;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -33,6 +35,15 @@ public class MainGUI extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JButton SubirHeroe, BajarHeroe, SubirBestia, BajarBestia;
+	private JList<String> listaHeroes;
+	private JList<String> listaBestias;
+	private DefaultListModel<String> modeloHeroes;
+	private DefaultListModel<String> modeloBestias;
+	private JTextArea textArea;
+	private App controlador;
+	// Declaración de botones
+    private JButton newPJ, luchar, mapas, musica, salir;
+    private JToggleButton velocidad;
 
 	/**
 	 * Launch the application.
@@ -54,6 +65,9 @@ public class MainGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public MainGUI() {
+		// Inicializar el controlador
+		controlador = new App();
+
 		// Ventana
 		setPreferredSize(new Dimension(700, 400));
 		setTitle("EL SEÑOR DE LOS ANILLOS");
@@ -83,7 +97,7 @@ public class MainGUI extends JFrame {
 		panelDerecha.setPreferredSize(new Dimension(250, 10));
 		contentPane.add(panelDerecha, BorderLayout.EAST);
 		panelDerecha.setLayout(new GridLayout(1, 0, 0, 0));
-		panelDerecha.setBorder(new EmptyBorder(10, 15, 10, 15));
+		panelDerecha.setBorder(new EmptyBorder(10, 5, 10, 5));
 
 		// Panel auxiliar de la derecha
 		JPanel panelAuxDerecha = new JPanel();
@@ -94,7 +108,6 @@ public class MainGUI extends JFrame {
 
 		// Panel para el manejo de ejercitos
 		JPanel panelEjercitos = new JPanel();
-		panelEjercitos.setPreferredSize(new Dimension(10, 200));
 		panelEjercitos.setBackground(new Color(64, 128, 128));
 		panelAuxDerecha.add(panelEjercitos);
 		panelEjercitos.setLayout(new GridLayout(1, 0, 0, 0));
@@ -109,12 +122,13 @@ public class MainGUI extends JFrame {
 		Label tituloHeroes = new Label("HEROES:");
 		panelHeroes.add(tituloHeroes, BorderLayout.NORTH);
 
-		// Lista de Heroes
-		JList<String> listaHeroes = new JList<>();
+		// Inicializar modelo de lista para heroes
+		modeloHeroes = new DefaultListModel<>();
+		listaHeroes = new JList<>(modeloHeroes);
 
 		// JScrollPane para heroes
 		JScrollPane scrollHeroes = new JScrollPane(listaHeroes);
-		scrollHeroes.setPreferredSize(new Dimension(100, 200));
+		scrollHeroes.setPreferredSize(new Dimension(100, 100));
 		panelHeroes.add(scrollHeroes, BorderLayout.CENTER);
 
 		// Panel de botones y botones de subir y bajar para heroes
@@ -136,8 +150,9 @@ public class MainGUI extends JFrame {
 		Label tituloBestias = new Label("BESTIAS:");
 		panelBestias.add(tituloBestias, BorderLayout.NORTH);
 
-		// Lista de Bestias
-		JList<String> listaBestias = new JList<>();
+		// Inicializar modelo de lista para bestias
+		modeloBestias = new DefaultListModel<>();
+		listaBestias = new JList<>(modeloBestias);
 
 		// JScrollPane de bestias
 		JScrollPane scrollBestias = new JScrollPane(listaBestias);
@@ -156,20 +171,21 @@ public class MainGUI extends JFrame {
 
 		// Panel de acciones
 		JPanel panelAcciones = new JPanel();
-		panelAcciones.setPreferredSize(new Dimension(10, 9));
 		panelAcciones.setBackground(new Color(64, 128, 128));
 		panelAuxDerecha.add(panelAcciones);
-		panelAcciones.setLayout(new BoxLayout(panelAcciones, BoxLayout.Y_AXIS));
-		panelAcciones.setBorder(new EmptyBorder(0, 50, 10, 50));
+		panelAcciones.setBorder(new EmptyBorder(0, 20, 0, 20));
+		panelAcciones.setLayout(new BorderLayout(0, 0));
 
 		// Boton que abrira una ventana para añadir un personaje
-		Button newPJ = new Button("Añadir PJ");
-		panelAcciones.add(newPJ);
-		panelAcciones.add(Box.createRigidArea(new Dimension(0, 10)));
+		newPJ = new JButton("Añadir PJ");
+		newPJ.setPreferredSize(new Dimension(10, 20));
+		panelAcciones.add(newPJ, BorderLayout.NORTH);
+		
 
 		// Boton que iniciara la batalla
-		Button luchar = new Button("¡¡¡ A LUCHAR !!!");
-		panelAcciones.add(luchar);
+		luchar = new JButton("¡¡¡ A LUCHAR !!!");
+		luchar.setPreferredSize(new Dimension(10, 20));
+		panelAcciones.add(luchar, BorderLayout.SOUTH);
 
 		// Panel auxiliar de la izquierda
 		JPanel panelAuxIzquierda = new JPanel();
@@ -186,30 +202,30 @@ public class MainGUI extends JFrame {
 		panelOpcJuego.setBorder(new EmptyBorder(5, 80, 5, 80));
 
 		// Boton que abrira una ventana para camiar de mapa
-		JButton mapas = new JButton("Mapas");
+		mapas = new JButton("Mapas");
 		panelOpcJuego.add(mapas);
 		panelOpcJuego.add(Box.createRigidArea(new Dimension(10, 0)));
 
 		// Pulsador que cambiara la velocidad de salida de la consola
-		JToggleButton velocidad = new JToggleButton("X2");
+		velocidad = new JToggleButton("X2");
 		panelOpcJuego.add(velocidad);
 		panelOpcJuego.add(Box.createRigidArea(new Dimension(10, 0)));
 
 		// Boton que abrira una ventana para camiar de musica
-		JButton musica = new JButton("Musica");
+		musica = new JButton("Musica");
 		panelOpcJuego.add(musica);
 		panelOpcJuego.add(Box.createRigidArea(new Dimension(10, 0)));
 
 		// Boton que hara volver a la pantalla de inicio
-		JButton salir = new JButton("Salir");
+		salir = new JButton("Salir");
 		panelOpcJuego.add(salir);
 
 		// Panel donde se expondra el mapa
 		JPanel panelMapa = new JPanel();
 		panelMapa.setBackground(new Color(128, 255, 128));
-		panelAuxIzquierda.add(panelMapa, BorderLayout.CENTER);
 		panelMapa.setLayout(new BorderLayout(0, 0));
 		panelMapa.setBorder(new EmptyBorder(10, 70, 10, 70));
+		panelAuxIzquierda.add(panelMapa, BorderLayout.CENTER);
 
 		// Panel para la consola
 		JPanel panelConsola = new JPanel();
@@ -217,9 +233,73 @@ public class MainGUI extends JFrame {
 		panelConsola.setLayout(new GridLayout(1, 0, 0, 0));
 
 		// JTextArea para la salida de consola
-		JTextArea textArea = new JTextArea();
+		textArea = new JTextArea();
 		textArea.setEditable(false);
-		panelConsola.add(textArea);
+		textArea.setLineWrap(true);
+		textArea.setWrapStyleWord(true);
 
+		// Añadir scroll al textArea
+		JScrollPane scrollConsola = new JScrollPane(textArea);
+		panelConsola.add(scrollConsola);
+		
+		// Manejador de listeners
+        configurarListeners();
+
+		// Cargar los ejercitos iniciales
+		actualizarListas();
+		textArea.setText("=== SISTEMA LISTO ===\n\nPrepara tus ejércitos y presiona '¡¡¡ A LUCHAR !!!' para comenzar la batalla.\n");
+
+
+	}
+	
+	/**
+     * Configura y asigna todos los ActionListeners a los componentes de la GUI.
+     */
+    private void configurarListeners() {
+        // Listener para el boton de Luchar
+    	luchar.addActionListener(e -> iniciarBatalla());    }
+
+	/**
+	 * Actualiza las listas de heroes y bestias desde el controlador, 
+	 * utilizando streams para una carga mas concisa.
+	 */
+	private void actualizarListas() {
+	    // 1. Limpiar modelos
+	    modeloHeroes.clear();
+	    modeloBestias.clear();
+
+	    // 2. Cargar heroes usando stream
+	    controlador.getEjercitoHeroes().getEjercito().stream()
+	        .map(this::formatearPersonaje)
+	        .forEach(modeloHeroes::addElement);
+
+	    // 3. Cargar bestias usando stream
+	    controlador.getEjercitoBestias().getEjercito().stream()
+	        .map(this::formatearPersonaje)
+	        .forEach(modeloBestias::addElement);
+	}
+
+	/**
+	 * Formatea un personaje para mostrarlo en la lista
+	 */
+	private String formatearPersonaje(Personaje p) {
+		return p.getNombre() + " [" + p.getTipo() + "] - V:" + p.getP_Vida() + " A:" + p.getNivelArmadura();
+	}
+
+	/**
+	 * Inicia la batalla
+	 */
+	private void iniciarBatalla() {
+			textArea.setText("=== PREPARANDO BATALLA ===\n\n");
+			
+			// Ejecutar la batalla y obtener el resultado completo
+			String resultadoBatalla = controlador.iniciarBatalla();
+			textArea.setText(resultadoBatalla);
+
+			// Actualizar las listas despues de la batalla
+			actualizarListas();
+
+			// Desplazar el scroll al final
+			textArea.setCaretPosition(textArea.getDocument().getLength());
 	}
 }
