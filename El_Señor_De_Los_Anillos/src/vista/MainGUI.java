@@ -6,10 +6,13 @@ import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JSlider;
 import javax.swing.border.EmptyBorder;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -22,6 +25,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Cursor;
 import java.awt.Label;
+import java.io.File;
 import java.util.ArrayList;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -29,7 +33,6 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JToggleButton;
-
 import modelo.*;
 import controlador.*;
 
@@ -44,8 +47,9 @@ public class MainGUI extends JFrame {
 	private DefaultListModel<String> modeloBestias;
 	private JTextArea textArea;
 	private App controlador;
-	private JButton newPJ, luchar, mapas, musica, salir;
+	private JButton newPJ, luchar, mapas, musica, reiniciar;
 	private JToggleButton velocidad;
+	private ControladorMusica controladorMusica;
 
 	/**
 	 * Launch the application.
@@ -69,6 +73,9 @@ public class MainGUI extends JFrame {
 	public MainGUI() {
 		// Inicializar el controlador
 		controlador = new App();
+
+		// Inicializar el controlador de musica
+		controladorMusica = new ControladorMusica();
 
 		// Ventana
 		setPreferredSize(new Dimension(700, 400));
@@ -213,13 +220,13 @@ public class MainGUI extends JFrame {
 		panelOpcJuego.add(Box.createRigidArea(new Dimension(10, 0)));
 
 		// Boton que abrira una ventana para camiar de musica
-		musica = new JButton("Musica");
+		musica = new JButton("♫");
 		panelOpcJuego.add(musica);
 		panelOpcJuego.add(Box.createRigidArea(new Dimension(10, 0)));
 
-		// Boton que hara volver a la pantalla de inicio
-		salir = new JButton("Salir");
-		panelOpcJuego.add(salir);
+		// Boton que reinicia los ejercitos
+		reiniciar = new JButton("↻");
+		panelOpcJuego.add(reiniciar);
 
 		// Panel donde se expondra el mapa
 		JPanel panelMapa = new JPanel();
@@ -248,8 +255,7 @@ public class MainGUI extends JFrame {
 
 		// Cargar los ejercitos iniciales
 		actualizarListas();
-		textArea.setText(
-				"=== SISTEMA LISTO ===\n\nPrepara tus ejércitos y presiona '¡¡¡ A LUCHAR !!!' para comenzar la batalla.\n");
+		textArea.setText("=== SISTEMA LISTO ===\n\nPrepara tus ejércitos y presiona '¡¡¡ A LUCHAR !!!' para comenzar la batalla.\n");
 
 	}
 
@@ -270,6 +276,7 @@ public class MainGUI extends JFrame {
 			}
 		});
 
+		
 		BajarHeroe.addActionListener(e -> {
 			int indice = listaHeroes.getSelectedIndex();
 			if (indice >= 0 && indice < controlador.getEjercitoHeroes().getEjercito().size() - 1) {
@@ -300,6 +307,13 @@ public class MainGUI extends JFrame {
 
 		// Listeners para añadir personajes
 		newPJ.addActionListener(e -> abrirVentanaAñadirPersonaje());
+
+		// Listeners para reiniciar ejercitos
+		reiniciar.addActionListener(e -> reiniciarListas());
+
+		// Listeners para abrir la ventana de musica
+		musica.addActionListener(e -> abrirVentanaMusica());
+
 	}
 
 	/**
@@ -479,6 +493,199 @@ public class MainGUI extends JFrame {
 	 */
 	private String formatearPersonaje(Personaje p) {
 		return p.getNombre() + " [" + p.getTipo() + "] - V:" + p.getP_Vida() + " A:" + p.getNivelArmadura();
+	}
+
+	/**
+	 * Reinicia las listas de heroes y bestias
+	 */
+	private void reiniciarListas() {
+		// Limpiar modelos
+		modeloHeroes.clear();
+		modeloBestias.clear();
+
+		// Inicializar ejercitos desde cero
+		controlador.inicializarEjercitos();
+
+		// Actualizar las listas
+		actualizarListas();
+
+		// reiniciar conlosa
+		textArea.setText(
+				"=== SISTEMA LISTO ===\n\nPrepara tus ejércitos y presiona '¡¡¡ A LUCHAR !!!' para comenzar la batalla.\n");
+
+	}
+
+	/**
+	 * Abre una ventana para seleccionar la musica de fondo
+	 */
+	private void abrirVentanaMusica() {
+
+		// JDialog para seleccionar musica
+		JDialog dialogoMusica = new JDialog(this, "SELECCIONAR MÚSICA", true);
+		dialogoMusica.setSize(400, 450);
+		dialogoMusica.setLocationRelativeTo(this);
+		dialogoMusica.setLayout(new BorderLayout(10, 10));
+
+		// Panel principal 
+		JPanel panelPrincipal = new JPanel();
+		panelPrincipal.setLayout(new BoxLayout(panelPrincipal, BoxLayout.Y_AXIS));
+		panelPrincipal.setBorder(new EmptyBorder(20, 20, 20, 20));
+
+		// Titulo
+		JLabel lblTitulo = new JLabel("Selecciona una canción:");
+		lblTitulo.setFont(new Font("Arial", Font.BOLD, 14));
+		lblTitulo.setAlignmentX(CENTER_ALIGNMENT);
+		panelPrincipal.add(lblTitulo);
+		panelPrincipal.add(Box.createRigidArea(new Dimension(0, 15)));
+
+		// ButtonGroup para los JRadioButtons
+		ButtonGroup grupoMusica = new ButtonGroup();
+
+		// Crear JRadioButtons con rutas a archivos
+		JRadioButton rb1 = new JRadioButton("The Shire - Howard Shore", true);
+		JRadioButton rb2 = new JRadioButton("Concerning Hobbits");
+		JRadioButton rb3 = new JRadioButton("The Breaking of the Fellowship");
+		JRadioButton rb4 = new JRadioButton("Minas Tirith");
+		JRadioButton rb5 = new JRadioButton("The Battle of the Pelennor Fields");
+		JRadioButton rb6 = new JRadioButton("Numb");
+		JRadioButton rb7 = new JRadioButton("Sin música");
+
+		// Añadir al grupo y al panel
+		grupoMusica.add(rb1);
+		grupoMusica.add(rb2);
+		grupoMusica.add(rb3);
+		grupoMusica.add(rb4);
+		grupoMusica.add(rb5);
+		grupoMusica.add(rb6);
+		grupoMusica.add(rb7);
+
+		panelPrincipal.add(rb1);
+		panelPrincipal.add(Box.createRigidArea(new Dimension(0, 5)));
+		panelPrincipal.add(rb2);
+		panelPrincipal.add(Box.createRigidArea(new Dimension(0, 5)));
+		panelPrincipal.add(rb3);
+		panelPrincipal.add(Box.createRigidArea(new Dimension(0, 5)));
+		panelPrincipal.add(rb4);
+		panelPrincipal.add(Box.createRigidArea(new Dimension(0, 5)));
+		panelPrincipal.add(rb5);
+		panelPrincipal.add(Box.createRigidArea(new Dimension(0, 5)));
+		panelPrincipal.add(rb6);
+		panelPrincipal.add(Box.createRigidArea(new Dimension(0, 5)));
+		panelPrincipal.add(rb7);
+
+		// Separador visual
+		panelPrincipal.add(Box.createRigidArea(new Dimension(0, 15)));
+		panelPrincipal.add(new javax.swing.JSeparator());
+		panelPrincipal.add(Box.createRigidArea(new Dimension(0, 15)));
+
+		// JPanel para el control de volumen
+		JPanel panelVolumen = new JPanel();
+		panelVolumen.setLayout(new BorderLayout(10, 5));
+		panelVolumen.setMaximumSize(new Dimension(400, 80));
+
+		// JLabel para volumen
+		JLabel lblVolumen = new JLabel("Volumen:");
+		lblVolumen.setFont(new Font("Arial", Font.BOLD, 12));
+		panelVolumen.add(lblVolumen, BorderLayout.NORTH);
+
+		// JPanel para slider y etiqueta de porcentaje
+		JPanel panelSlider = new JPanel(new BorderLayout(5, 0));
+
+		// JSlider para controlar el volumen (0-100)
+		JSlider sliderVolumen = new JSlider(0, 100, 70);
+		sliderVolumen.setMajorTickSpacing(25);
+		sliderVolumen.setMinorTickSpacing(5);
+		sliderVolumen.setPaintTicks(true);
+		sliderVolumen.setPaintLabels(true);
+
+		// Etiqueta que muestra el porcentaje actual
+		JLabel lblPorcentaje = new JLabel("70%");
+		lblPorcentaje.setFont(new Font("Arial", Font.BOLD, 14));
+		lblPorcentaje.setPreferredSize(new Dimension(50, 20));
+
+		// Listener para actualizar el volumen en tiempo real
+		sliderVolumen.addChangeListener(e -> {
+			int valor = sliderVolumen.getValue();
+			lblPorcentaje.setText(valor + "%");
+
+			// Ajustar volumen si hay musica reproduciendose
+			if (controladorMusica.estaReproduciendo()) {
+				float volumen = valor / 100.0f;
+				controladorMusica.ajustarVolumen(volumen);
+			}
+		});
+
+		panelSlider.add(sliderVolumen, BorderLayout.CENTER);
+		panelSlider.add(lblPorcentaje, BorderLayout.EAST);
+
+		panelVolumen.add(panelSlider, BorderLayout.CENTER);
+
+		panelPrincipal.add(panelVolumen);
+
+		// Panel para botones
+		JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+		JButton btnAceptar = new JButton("Aceptar");
+		JButton btnCancelar = new JButton("Cancelar");
+
+		panelBotones.add(btnAceptar);
+		panelBotones.add(btnCancelar);
+
+		dialogoMusica.add(panelPrincipal, BorderLayout.CENTER);
+		dialogoMusica.add(panelBotones, BorderLayout.SOUTH);
+
+		// Listener del boton Aceptar 
+		btnAceptar.addActionListener(ev -> {
+			String cancionSeleccionada = "";
+			String rutaArchivo = "";
+
+			// Determinar que opcion fue seleccionada y asignar la ruta
+			if (rb1.isSelected()) {
+	            cancionSeleccionada = "The Shire - Howard Shore";
+	            rutaArchivo = "src/musica/the_shire.wav";
+	        } else if (rb2.isSelected()) {
+				cancionSeleccionada = "Concerning Hobbits";
+				rutaArchivo = "src/musica/concerning_hobbits.wav";
+			} else if (rb3.isSelected()) {
+				cancionSeleccionada = "The Breaking of the Fellowship";
+				rutaArchivo = "src/musica/breaking_fellowship.wav";
+			} else if (rb4.isSelected()) {
+				cancionSeleccionada = "Minas Tirith";
+				rutaArchivo = "src/musica/minas_tirith.wav";
+			} else if (rb5.isSelected()) {
+				cancionSeleccionada = "The Battle of the Pelennor Fields";
+				rutaArchivo = "src/musica/pelennor_fields.wav";
+			} else if (rb6.isSelected()) {
+				cancionSeleccionada = "Numb - Linkin park";
+				rutaArchivo = "src/musica/Numb.wav"; 
+			} else if (rb7.isSelected()) {
+				// Detener la musica actual
+				controladorMusica.detener();
+				JOptionPane.showMessageDialog(dialogoMusica, "Música detenida", "Sin música",
+						JOptionPane.INFORMATION_MESSAGE);
+				dialogoMusica.dispose();
+				return;
+			}
+
+			// Reproducir la musica seleccionada
+			try {
+				controladorMusica.reproducir(rutaArchivo);
+				JOptionPane.showMessageDialog(dialogoMusica, "Reproduciendo: " + cancionSeleccionada,
+						"Música seleccionada", JOptionPane.INFORMATION_MESSAGE);
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(dialogoMusica,
+						"Error al reproducir: " + cancionSeleccionada
+								+ "\nAsegúrate de que el archivo existe en la carpeta 'musica'",
+						"Error", JOptionPane.ERROR_MESSAGE);
+			}
+
+			dialogoMusica.dispose();
+
+		});
+
+		btnCancelar.addActionListener(ev -> dialogoMusica.dispose());
+
+		dialogoMusica.setVisible(true);
+
 	}
 
 	/**
