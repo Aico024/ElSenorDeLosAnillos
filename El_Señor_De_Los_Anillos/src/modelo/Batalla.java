@@ -98,9 +98,9 @@ public class Batalla {
 
 		// La bestia ataca (si aun esta viva)
 		log.append("--------------------------------------------\n");
-		String combateB = (bestia.getNombre() + " ataca a " + heroe.getNombre());
-		log.append(combateB);
 		if (bestia.estaVivo()) {
+			String combateB = (bestia.getNombre() + " ataca a " + heroe.getNombre());
+			log.append(combateB);
 			int potenciaBestia = bestia.atacar(heroe);
 			String mensajeEspecialBestia = obtenerMensajeEspecial(bestia);
 			int danioBestia = heroe.recibirDaño(potenciaBestia);
