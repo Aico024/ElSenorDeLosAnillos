@@ -44,25 +44,34 @@ public class SeleccionarMapa extends JDialog {
      */
     private void inicializarComponentes() {
     	 getContentPane().setLayout(new BorderLayout(10, 10));
+    	 getContentPane().setBackground(new Color(53, 53, 53));
     	    
     	    // Panel principal
     	    JPanel panelPrincipal = new JPanel();
     	    panelPrincipal.setLayout(new BorderLayout(10, 10));
     	    panelPrincipal.setBorder(new EmptyBorder(20, 20, 20, 20));
+    	    panelPrincipal.setBackground(new Color(53, 53, 53));
+
     	    
     	    // Titulo
     	    JLabel lblTitulo = new JLabel("Selecciona un mapa:");
+    	    lblTitulo.setForeground(new Color(187, 173, 124));
     	    lblTitulo.setFont(new Font("Arial", Font.BOLD, 14));
     	    panelPrincipal.add(lblTitulo, BorderLayout.NORTH);
     	    
+    	    
     	    // Panel central con opciones y vista previa
     	    JPanel panelCentral = new JPanel(new BorderLayout(10, 10));
+    	    panelCentral.setBackground(new Color(53, 53, 53));
+
     	    
     	    // Panel derecho para vista previa
     	    lblVistaPrevia = new JLabel();
     	    lblVistaPrevia.setPreferredSize(new Dimension(300, 250));
     	    lblVistaPrevia.setHorizontalAlignment(SwingConstants.CENTER);
     	    lblVistaPrevia.setText("Selecciona un mapa");
+    	    lblVistaPrevia.setForeground(new Color(187, 173, 124));
+
     	    
     	    // Panel izquierdo con radio buttons 
     	    JPanel panelOpciones = crearPanelOpciones();
@@ -74,9 +83,18 @@ public class SeleccionarMapa extends JDialog {
     	    
     	    // Panel de botones
     	    JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
-    	    JButton btnAceptar = new JButton("Aceptar");
-    	    JButton btnCancelar = new JButton("Cancelar");
+    	    panelBotones.setBackground(new Color(53, 53, 53));
     	    
+    	    JButton btnAceptar = new JButton("Aceptar");
+    	    btnAceptar.setForeground(new Color(187, 173, 124));
+    	    btnAceptar.setBackground(new Color(53, 53, 53));
+
+
+    	    JButton btnCancelar = new JButton("Cancelar");
+    	    btnCancelar.setForeground(new Color(187, 173, 124));
+    	    btnCancelar.setBackground(new Color(53, 53, 53));
+
+
     	    panelBotones.add(btnAceptar);
     	    panelBotones.add(btnCancelar);
     	    
@@ -93,6 +111,7 @@ public class SeleccionarMapa extends JDialog {
      */
     private JPanel crearPanelOpciones() {
         JPanel panelOpciones = new JPanel();
+        panelOpciones.setBackground(new Color(53, 53, 53));
         panelOpciones.setLayout(new BoxLayout(panelOpciones, BoxLayout.Y_AXIS));
         panelOpciones.setBorder(new EmptyBorder(10, 10, 10, 10));
         
@@ -101,10 +120,30 @@ public class SeleccionarMapa extends JDialog {
         
         // Crear JRadioButtons con las opciones de mapas
         rbMapa1 = new JRadioButton("Lord Of The Rings", true);
+        rbMapa1.setForeground(new Color(187, 173, 124));
+        rbMapa1.setBackground(new Color(53, 53, 53));
+        rbMapa1.setBorder(null);
+		
         rbMapa2 = new JRadioButton("La Comarca");
+        rbMapa2.setForeground(new Color(187, 173, 124));
+        rbMapa2.setBackground(new Color(53, 53, 53));
+        rbMapa2.setBorder(null);
+
         rbMapa3 = new JRadioButton("Mordor");
+        rbMapa3.setForeground(new Color(187, 173, 124));
+        rbMapa3.setBackground(new Color(53, 53, 53));
+        rbMapa3.setBorder(null);
+
         rbMapa4 = new JRadioButton("Bosque Negro");
+        rbMapa4.setForeground(new Color(187, 173, 124));
+        rbMapa4.setBackground(new Color(53, 53, 53));
+        rbMapa4.setBorder(null);
+
         rbMapa5 = new JRadioButton("Minas Tirith");
+        rbMapa5.setForeground(new Color(187, 173, 124));
+        rbMapa5.setBackground(new Color(53, 53, 53));
+        rbMapa5.setBorder(null);
+
 
         
         // Listener para actualizar vista previa
@@ -199,6 +238,7 @@ public class SeleccionarMapa extends JDialog {
                 "Mapa aplicado: " + mapaSeleccionado, 
                 "Mapa seleccionado",
                 JOptionPane.INFORMATION_MESSAGE);
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this,
                 "Error al aplicar el mapa: " + mapaSeleccionado + 

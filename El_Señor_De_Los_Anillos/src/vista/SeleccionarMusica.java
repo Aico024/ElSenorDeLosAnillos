@@ -1,6 +1,7 @@
 package vista;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -53,14 +54,17 @@ public class SeleccionarMusica extends JDialog {
      */
     private void inicializarComponentes() {
         getContentPane().setLayout(new BorderLayout(10, 10));
+        getContentPane().setBackground(new Color(53, 53, 53));
         
         // Panel principal
         JPanel panelPrincipal = new JPanel();
         panelPrincipal.setLayout(new BoxLayout(panelPrincipal, BoxLayout.Y_AXIS));
         panelPrincipal.setBorder(new EmptyBorder(20, 20, 20, 20));
+        panelPrincipal.setBackground(new Color(53, 53, 53));
         
         // Titulo
         JLabel lblTitulo = new JLabel("Selecciona una canción:");
+        lblTitulo.setForeground(new Color(187, 173, 124));
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 14));
         lblTitulo.setAlignmentX(CENTER_ALIGNMENT);
         panelPrincipal.add(lblTitulo);
@@ -71,12 +75,33 @@ public class SeleccionarMusica extends JDialog {
         
         // Crear JRadioButtons con las opciones de música
         rb1 = new JRadioButton("The Shire - Howard Shore", true);
+        rb1.setForeground(new Color(187, 173, 124));
+        rb1.setBackground(new Color(53, 53, 53));
+        rb1.setBorder(null);
         rb2 = new JRadioButton("Concerning Hobbits");
+        rb2.setForeground(new Color(187, 173, 124));
+        rb2.setBackground(new Color(53, 53, 53));
+        rb2.setBorder(null);
         rb3 = new JRadioButton("The Breaking of the Fellowship");
+        rb3.setForeground(new Color(187, 173, 124));
+        rb3.setBackground(new Color(53, 53, 53));
+        rb3.setBorder(null);
         rb4 = new JRadioButton("Minas Tirith");
+        rb4.setForeground(new Color(187, 173, 124));
+        rb4.setBackground(new Color(53, 53, 53));
+        rb4.setBorder(null);
         rb5 = new JRadioButton("The Battle of the Pelennor Fields");
+        rb5.setForeground(new Color(187, 173, 124));
+        rb5.setBackground(new Color(53, 53, 53));
+        rb5.setBorder(null);
         rb6 = new JRadioButton("Numb");
+        rb6.setForeground(new Color(187, 173, 124));
+        rb6.setBackground(new Color(53, 53, 53));
+        rb6.setBorder(null);
         rb7 = new JRadioButton("Sin música");
+        rb7.setForeground(new Color(187, 173, 124));
+        rb7.setBackground(new Color(53, 53, 53));
+        rb7.setBorder(null);
         
         // Añadir al grupo y al panel
         agregarRadioButton(panelPrincipal, rb1);
@@ -89,7 +114,9 @@ public class SeleccionarMusica extends JDialog {
         
         // Separador visual
         panelPrincipal.add(Box.createRigidArea(new Dimension(0, 15)));
-        panelPrincipal.add(new JSeparator());
+        JSeparator separador = new JSeparator();
+        separador.setForeground(new Color(187, 173, 124));
+        panelPrincipal.add(separador);
         panelPrincipal.add(Box.createRigidArea(new Dimension(0, 15)));
         
         // Panel para el control de volumen
@@ -97,8 +124,16 @@ public class SeleccionarMusica extends JDialog {
         
         // Panel de botones
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        panelBotones.setBackground(new Color(53, 53, 53));
+
         JButton btnAceptar = new JButton("Aceptar");
+        btnAceptar.setForeground(new Color(187, 173, 124));
+        btnAceptar.setBackground(new Color(53, 53, 53));
+        btnAceptar.setBorder(null);
         JButton btnCancelar = new JButton("Cancelar");
+        btnCancelar.setForeground(new Color(187, 173, 124));
+        btnCancelar.setBackground(new Color(53, 53, 53));
+        btnCancelar.setBorder(null);
         
         panelBotones.add(btnAceptar);
         panelBotones.add(btnCancelar);
@@ -125,28 +160,33 @@ public class SeleccionarMusica extends JDialog {
      */
     private JPanel crearPanelVolumen() {
         JPanel panelVolumen = new JPanel();
+        panelVolumen.setBackground(new Color(53, 53, 53));
         panelVolumen.setLayout(new BorderLayout(10, 5));
         panelVolumen.setMaximumSize(new Dimension(400, 80));
         
         // Label para volumen
         JLabel lblVolumen = new JLabel("Volumen:");
+        lblVolumen.setForeground(new Color(187, 173, 124));
         lblVolumen.setFont(new Font("Arial", Font.BOLD, 12));
         panelVolumen.add(lblVolumen, BorderLayout.NORTH);
         
         // Panel para slider y etiqueta de porcentaje
         JPanel panelSlider = new JPanel(new BorderLayout(5, 0));
+        panelSlider.setBackground(new Color(53, 53, 53));
         
         // Slider para controlar el volumen (0-100)
         sliderVolumen = new JSlider(0, 100, 70);
-        sliderVolumen.setMajorTickSpacing(25);
-        sliderVolumen.setMinorTickSpacing(5);
+        sliderVolumen.setBackground(new Color(53, 53, 53));
         sliderVolumen.setPaintTicks(true);
         sliderVolumen.setPaintLabels(true);
+
         
         // Etiqueta que muestra el porcentaje actual
         lblPorcentaje = new JLabel("70%");
         lblPorcentaje.setFont(new Font("Arial", Font.BOLD, 14));
         lblPorcentaje.setPreferredSize(new Dimension(50, 20));
+        lblPorcentaje.setForeground(new Color(187, 173, 124));
+
         
         // Listener para actualizar el volumen en tiempo real
         sliderVolumen.addChangeListener(e -> {

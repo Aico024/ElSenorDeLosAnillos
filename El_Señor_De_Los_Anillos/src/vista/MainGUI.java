@@ -14,6 +14,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -23,6 +24,7 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Cursor;
 import java.awt.Label;
 import java.io.File;
@@ -82,6 +84,11 @@ public class MainGUI extends JFrame {
 
 		// Inicializar el controlador de musica
 		controladorMusica = new ControladorMusica();
+		
+		// Cambiar logotipo
+		ImageIcon icon = new ImageIcon("src/fondos/logo.jpg");
+		Image img = icon.getImage().getScaledInstance(280, 230, Image.SCALE_SMOOTH);
+		setIconImage(img);
 
 		// Ventana
 		setPreferredSize(new Dimension(700, 400));
@@ -96,7 +103,7 @@ public class MainGUI extends JFrame {
 		// Panel del Titulo
 		JPanel panelTitulo = new JPanel();
 		panelTitulo.setPreferredSize(new Dimension(10, 80));
-		panelTitulo.setBackground(new Color(255, 128, 128));
+		panelTitulo.setBackground(new Color(53, 53, 53));
 		contentPane.add(panelTitulo, BorderLayout.NORTH);
 		panelTitulo.setLayout(new GridLayout(1, 0, 0, 0));
 
@@ -104,42 +111,50 @@ public class MainGUI extends JFrame {
 		JLabel Titulo = new JLabel("EL SEÑOR DE LOS ANILLOS");
 		Titulo.setHorizontalAlignment(SwingConstants.CENTER);
 		Titulo.setFont(new Font("Arial", Font.BOLD, 36));
+		Titulo.setForeground(new Color(187, 173, 124));
 		panelTitulo.add(Titulo);
 
 		// Panel de la derecha
 		JPanel panelDerecha = new JPanel();
-		panelDerecha.setBackground(new Color(0, 128, 192));
 		panelDerecha.setPreferredSize(new Dimension(250, 10));
 		contentPane.add(panelDerecha, BorderLayout.EAST);
 		panelDerecha.setLayout(new GridLayout(1, 0, 0, 0));
 		panelDerecha.setBorder(new EmptyBorder(10, 5, 10, 5));
+		panelDerecha.setBackground(new Color(187, 173, 124));
+
 
 		// Panel auxiliar de la derecha
 		JPanel panelAuxDerecha = new JPanel();
 		panelAuxDerecha.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-		panelAuxDerecha.setBackground(new Color(0, 128, 64));
-		panelDerecha.add(panelAuxDerecha);
+		panelAuxDerecha.setBackground(new Color(187, 173, 124));
 		panelAuxDerecha.setLayout(new BoxLayout(panelAuxDerecha, BoxLayout.Y_AXIS));
+		panelDerecha.add(panelAuxDerecha);
 
 		// Panel para el manejo de ejercitos
 		JPanel panelEjercitos = new JPanel();
-		panelEjercitos.setBackground(new Color(64, 128, 128));
 		panelAuxDerecha.add(panelEjercitos);
 		panelEjercitos.setLayout(new GridLayout(1, 0, 0, 0));
-		panelEjercitos.setBorder(new EmptyBorder(20, 10, 20, 10));
+		panelEjercitos.setBorder(new EmptyBorder(20, 10, 10, 10));
+		panelEjercitos.setBackground(new Color(187, 173, 124));
 
 		// Panel que gestiona a los heroes
 		JPanel panelHeroes = new JPanel();
 		panelEjercitos.add(panelHeroes);
 		panelHeroes.setLayout(new BorderLayout(0, 0));
+		panelHeroes.setBackground(new Color(53, 53, 53));
+
 
 		// Titulo de heroes
 		Label tituloHeroes = new Label("HEROES:");
 		panelHeroes.add(tituloHeroes, BorderLayout.NORTH);
+		panelHeroes.setForeground(new Color(187, 173, 124));
+
 
 		// Inicializar modelo de lista para heroes
 		modeloHeroes = new DefaultListModel<>();
 		listaHeroes = new JList<>(modeloHeroes);
+		listaHeroes.setBackground(new Color(53, 53, 53));
+		listaHeroes.setForeground(new Color(187, 173, 124));
 
 		// JScrollPane para heroes
 		JScrollPane scrollHeroes = new JScrollPane(listaHeroes);
@@ -148,8 +163,15 @@ public class MainGUI extends JFrame {
 
 		// Panel de botones y botones de subir y bajar para heroes
 		JPanel botonesHeroes = new JPanel(new FlowLayout(FlowLayout.CENTER, 3, 3));
+		botonesHeroes.setBackground(new Color(53, 53, 53));
+
 		SubirHeroe = new JButton("↑");
+		SubirHeroe.setForeground(new Color(187, 173, 124));
+		SubirHeroe.setBackground(new Color(53, 53, 53));
 		BajarHeroe = new JButton("↓");
+		BajarHeroe.setForeground(new Color(187, 173, 124));
+		BajarHeroe.setBackground(new Color(53, 53, 53));
+
 
 		// Agregar botones de subir y bajar heroes
 		botonesHeroes.add(SubirHeroe);
@@ -160,24 +182,42 @@ public class MainGUI extends JFrame {
 		JPanel panelBestias = new JPanel();
 		panelEjercitos.add(panelBestias);
 		panelBestias.setLayout(new BorderLayout(0, 0));
+		panelBestias.setBackground(new Color(53, 53, 53));
+
 
 		// Titulo de bestias
 		Label tituloBestias = new Label("BESTIAS:");
 		panelBestias.add(tituloBestias, BorderLayout.NORTH);
+		panelBestias.setForeground(new Color(187, 173, 124));
+
+		
 
 		// Inicializar modelo de lista para bestias
 		modeloBestias = new DefaultListModel<>();
 		listaBestias = new JList<>(modeloBestias);
+		listaBestias.setBackground(new Color(53, 53, 53));
+		listaBestias.setForeground(new Color(187, 173, 124));
+		
 
 		// JScrollPane de bestias
 		JScrollPane scrollBestias = new JScrollPane(listaBestias);
 		scrollBestias.setPreferredSize(new Dimension(100, 200));
 		panelBestias.add(scrollBestias, BorderLayout.CENTER);
 
+
 		// Panel de botones y botones de subir y bajar para heroes
 		JPanel botonesBestias = new JPanel(new FlowLayout(FlowLayout.CENTER, 3, 3));
+		botonesBestias.setBackground(new Color(53, 53, 53));
+
 		SubirBestia = new JButton("↑");
+		SubirBestia.setForeground(new Color(187, 173, 124));
+		SubirBestia.setBackground(new Color(53, 53, 53));
+
 		BajarBestia = new JButton("↓");
+		BajarBestia.setForeground(new Color(187, 173, 124));
+		BajarBestia.setBackground(new Color(53, 53, 53));
+
+
 
 		// Agregar botones de subir y bajar Bestias
 		botonesBestias.add(SubirBestia);
@@ -186,30 +226,33 @@ public class MainGUI extends JFrame {
 
 		// Panel de acciones
 		JPanel panelAcciones = new JPanel();
-		panelAcciones.setBackground(new Color(64, 128, 128));
+		panelAcciones.setBackground(new Color(187, 173, 124));
 		panelAuxDerecha.add(panelAcciones);
-		panelAcciones.setBorder(new EmptyBorder(0, 20, 0, 20));
-		panelAcciones.setLayout(new BorderLayout(0, 0));
+		panelAcciones.setBorder(new EmptyBorder(0, 20, 5, 20));
+		panelAcciones.setLayout(new GridLayout(0, 1, 0, 0));
 
 		// Boton que abrira una ventana para añadir un personaje
 		newPJ = new JButton("Añadir PJ");
 		newPJ.setPreferredSize(new Dimension(10, 20));
-		panelAcciones.add(newPJ, BorderLayout.NORTH);
+		newPJ.setForeground(new Color(187, 173, 124));
+		newPJ.setBackground(new Color(53, 53, 53));
+		panelAcciones.add(newPJ);
 
 		// Boton que iniciara la batalla
 		luchar = new JButton("¡¡¡ A LUCHAR !!!");
 		luchar.setPreferredSize(new Dimension(10, 20));
-		panelAcciones.add(luchar, BorderLayout.SOUTH);
+		luchar.setForeground(new Color(187, 173, 124));
+		luchar.setBackground(new Color(53, 53, 53));
+		panelAcciones.add(luchar);
 
 		// Panel auxiliar de la izquierda
 		JPanel panelAuxIzquierda = new JPanel();
-		panelAuxIzquierda.setBackground(new Color(192, 192, 192));
 		contentPane.add(panelAuxIzquierda, BorderLayout.CENTER);
 		panelAuxIzquierda.setLayout(new BorderLayout(0, 0));
 
 		// Panel para opciones del juego
 		JPanel panelOpcJuego = new JPanel();
-		panelOpcJuego.setBackground(new Color(255, 255, 128));
+		panelOpcJuego.setBackground(new Color(187, 173, 124));
 		panelOpcJuego.setPreferredSize(new Dimension(10, 50));
 		panelAuxIzquierda.add(panelOpcJuego, BorderLayout.NORTH);
 		panelOpcJuego.setLayout(new GridLayout(1, 0, 0, 0));
@@ -217,26 +260,38 @@ public class MainGUI extends JFrame {
 
 		// Boton que abrira una ventana para camiar de mapa
 		mapas = new JButton("Mapas");
+		mapas.setBorder(null);
+		mapas.setBackground(new Color(53, 53, 53));
+		mapas.setForeground(new Color(187, 173, 124));
 		panelOpcJuego.add(mapas);
 		panelOpcJuego.add(Box.createRigidArea(new Dimension(10, 0)));
 
 
 		// Pulsador que cambiara la velocidad de salida de la consola
 		velocidad = new JToggleButton("X2");
+		velocidad.setBackground(new Color(53, 53, 53));
+		velocidad.setForeground(new Color(187, 173, 124));
 		panelOpcJuego.add(velocidad);
 		panelOpcJuego.add(Box.createRigidArea(new Dimension(10, 0)));
 
 		// Boton que abrira una ventana para camiar de musica
 		musica = new JButton("♫");
+		musica.setBorder(null);
+		musica.setBackground(new Color(53, 53, 53));
+		musica.setForeground(new Color(187, 173, 124));
 		panelOpcJuego.add(musica);
 		panelOpcJuego.add(Box.createRigidArea(new Dimension(10, 0)));
 
 		// Boton que reinicia los ejercitos
 		reiniciar = new JButton("↻");
+		reiniciar.setBorder(null);
+		reiniciar.setBackground(new Color(53, 53, 53));
+		reiniciar.setForeground(new Color(187, 173, 124));
 		panelOpcJuego.add(reiniciar);
 
 		// Panel donde se expondra el mapa
 		panelMapa = new JPanel();
+		panelMapa.setBackground(new Color(53, 53, 53));
 		panelMapa.setLayout(new BorderLayout(0, 0));
 		panelMapa.setBorder(new EmptyBorder(10, 70, 10, 70));
 		panelAuxIzquierda.add(panelMapa, BorderLayout.CENTER);
@@ -470,6 +525,7 @@ public class MainGUI extends JFrame {
 	        
 	        // Crear un nuevo JScrollPane
 	        JScrollPane scrollConsola = new JScrollPane(textArea);
+	        scrollConsola.setBorder(null);
 	        scrollConsola.setOpaque(false);
 	        scrollConsola.getViewport().setOpaque(false);
 	        
