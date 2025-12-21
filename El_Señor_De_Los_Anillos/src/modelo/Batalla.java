@@ -34,8 +34,10 @@ public class Batalla {
 		log.append("=== COMIENZA LA BATALLA ===\n\n");
 
 		while (!buenos.getEjercito().isEmpty() && !malos.getEjercito().isEmpty()) {
+			log.append("----------------------------------------------------------------------------------------------------------------\n");
 			log.append("COMIENZA EL TURNO " + turno + ":\n");
 			iniTurno();
+			log.append("----------------------------------------------------------------------------------------------------------------\n");
 			log.append("\n");
 			turno++;
 			
@@ -74,43 +76,50 @@ public class Batalla {
 	 * @param bestia la bestia que combate
 	 */
 	private void realizarCombate(Personaje heroe, Personaje bestia) {
+		log.append("-----------------------------------------------------------\n");
 		String combate = ("\n Lucha entre " + heroe.getNombre() + " (Vida=" + heroe.getP_Vida() + " Armadura="
 				+ heroe.getNivelArmadura() + ") y " + bestia.getNombre() + " (Vida=" + bestia.getP_Vida() + " Armadura="
 				+ bestia.getNivelArmadura() + ")\n");
 		log.append(combate);
 		
 		// El heroe ataca
-		log.append("--------------------------------------------\n");
+		log.append("\n");
 		String combateH =(heroe.getNombre() + " ataca a " + bestia.getNombre());
 		log.append(combateH);
 		int potenciaHeroe = heroe.atacar(bestia);
 		String mensajeEspecialHeroe = obtenerMensajeEspecial(heroe);
 		int danioHeroe = bestia.recibirDaño(potenciaHeroe);
+		String mensajeRecibirBestia = obtenerMensajeRecibir(bestia);
 		String resultadoH = " " + heroe.getNombre() + " saca " + potenciaHeroe + " y le quita " + danioHeroe
 				+ " de vida a " + bestia.getNombre() + "\n";
 		
 		if (!mensajeEspecialHeroe.isEmpty()) {
 			resultadoH += " " + mensajeEspecialHeroe;
-		}
+		} 
 		log.append(resultadoH);
-		log.append("--------------------------------------------\n");
+		if(!mensajeRecibirBestia.isEmpty()) {
+			log.append(mensajeRecibirBestia);
+		}
 
 
 		// La bestia ataca (si aun esta viva)
-		log.append("--------------------------------------------\n");
+		log.append("\n");
 		if (bestia.estaVivo()) {
 			String combateB = (bestia.getNombre() + " ataca a " + heroe.getNombre());
 			log.append(combateB);
 			int potenciaBestia = bestia.atacar(heroe);
 			String mensajeEspecialBestia = obtenerMensajeEspecial(bestia);
 			int danioBestia = heroe.recibirDaño(potenciaBestia);
+			String mensajeRecibitHeroe = obtenerMensajeRecibir(heroe);
 			String resultadoBestia = " " + bestia.getNombre() + " saca " + potenciaBestia + " y le quita " + danioBestia
 					+ " de vida a " + heroe.getNombre() + "\n";
 			if (!mensajeEspecialBestia.isEmpty()) {
 				resultadoBestia += " " + mensajeEspecialBestia;
 			}
 			log.append(resultadoBestia);
-			log.append("--------------------------------------------\n");
+			if(!mensajeRecibitHeroe.isEmpty()) {
+				log.append(mensajeRecibitHeroe);
+			}
 
 		}
 	}
@@ -124,10 +133,33 @@ public class Batalla {
 	private String obtenerMensajeEspecial(Personaje personaje) {
 		if (personaje instanceof Elfo) {
 			return ((Elfo) personaje).getUltimoMensaje() + "\n";
+		} else if (personaje instanceof Humano) {
+			return ((Humano) personaje).getUltimoMensaje() + "\n";
 		} else if (personaje instanceof Hobbit) {
 			return ((Hobbit) personaje).getUltimoMensaje() + "\n";
+		} else if (personaje instanceof Ent) {
+			return ((Ent) personaje).getUltimoMensaje() + "\n";
 		} else if (personaje instanceof Orco) {
 			return ((Orco) personaje).getUltimoMensaje() + "\n";
+		} else if (personaje instanceof UrukHai) {
+			return ((UrukHai) personaje).getUltimoMensaje() + "\n";
+		} else if (personaje instanceof Nazgul) {
+			return ((Nazgul) personaje).getUltimoMensaje() + "\n";
+		}
+		return "";
+	}
+	
+	/**
+	 * Obtiene el mensaje al recibir daño de un personaje si tiene uno
+	 * 
+	 * @param personaje el personaje del que obtener el mensaje
+	 * @return el mensaje especial o una cadena vacia
+	 */
+	private String obtenerMensajeRecibir(Personaje personaje) {
+		if (personaje instanceof Dunedain) {
+			return ((Dunedain) personaje).getUltimoMensaje() + "\n";
+		} else if (personaje instanceof Troll) {
+			return ((Troll) personaje).getUltimoMensaje() + "\n";
 		}
 		return "";
 	}

@@ -49,7 +49,7 @@ public class MainGUI extends JFrame {
 	private DefaultListModel<String> modeloBestias;
 	private JTextArea textArea;
 	private App controlador;
-	private JButton newPJ, luchar, mapas, musica, reiniciar;
+	private JButton newPJ, eliminarPJ, luchar, mapas, musica, reiniciar;
 	private JToggleButton velocidad;
 	private ControladorMusica controladorMusica;
 	private boolean modoLento = false;
@@ -57,6 +57,7 @@ public class MainGUI extends JFrame {
 	private static final int DELAY_LENTO = 10;
 	private JPanel panelMapa;
 	private String rutaMapaActual = "";
+
 	/**
 	 * Launch the application.
 	 */
@@ -77,14 +78,13 @@ public class MainGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public MainGUI() {
-		
-		
+
 		// Inicializar el controlador
 		controlador = new App();
 
 		// Inicializar el controlador de musica
 		controladorMusica = new ControladorMusica();
-		
+
 		// Cambiar logotipo
 		ImageIcon icon = new ImageIcon("src/fondos/logo.jpg");
 		Image img = icon.getImage().getScaledInstance(280, 230, Image.SCALE_SMOOTH);
@@ -122,7 +122,6 @@ public class MainGUI extends JFrame {
 		panelDerecha.setBorder(new EmptyBorder(10, 5, 10, 5));
 		panelDerecha.setBackground(new Color(187, 173, 124));
 
-
 		// Panel auxiliar de la derecha
 		JPanel panelAuxDerecha = new JPanel();
 		panelAuxDerecha.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
@@ -143,12 +142,10 @@ public class MainGUI extends JFrame {
 		panelHeroes.setLayout(new BorderLayout(0, 0));
 		panelHeroes.setBackground(new Color(53, 53, 53));
 
-
 		// Titulo de heroes
 		Label tituloHeroes = new Label("HEROES:");
 		panelHeroes.add(tituloHeroes, BorderLayout.NORTH);
 		panelHeroes.setForeground(new Color(187, 173, 124));
-
 
 		// Inicializar modelo de lista para heroes
 		modeloHeroes = new DefaultListModel<>();
@@ -172,7 +169,6 @@ public class MainGUI extends JFrame {
 		BajarHeroe.setForeground(new Color(187, 173, 124));
 		BajarHeroe.setBackground(new Color(53, 53, 53));
 
-
 		// Agregar botones de subir y bajar heroes
 		botonesHeroes.add(SubirHeroe);
 		botonesHeroes.add(BajarHeroe);
@@ -184,26 +180,21 @@ public class MainGUI extends JFrame {
 		panelBestias.setLayout(new BorderLayout(0, 0));
 		panelBestias.setBackground(new Color(53, 53, 53));
 
-
 		// Titulo de bestias
 		Label tituloBestias = new Label("BESTIAS:");
 		panelBestias.add(tituloBestias, BorderLayout.NORTH);
 		panelBestias.setForeground(new Color(187, 173, 124));
-
-		
 
 		// Inicializar modelo de lista para bestias
 		modeloBestias = new DefaultListModel<>();
 		listaBestias = new JList<>(modeloBestias);
 		listaBestias.setBackground(new Color(53, 53, 53));
 		listaBestias.setForeground(new Color(187, 173, 124));
-		
 
 		// JScrollPane de bestias
 		JScrollPane scrollBestias = new JScrollPane(listaBestias);
 		scrollBestias.setPreferredSize(new Dimension(100, 200));
 		panelBestias.add(scrollBestias, BorderLayout.CENTER);
-
 
 		// Panel de botones y botones de subir y bajar para heroes
 		JPanel botonesBestias = new JPanel(new FlowLayout(FlowLayout.CENTER, 3, 3));
@@ -217,8 +208,6 @@ public class MainGUI extends JFrame {
 		BajarBestia.setForeground(new Color(187, 173, 124));
 		BajarBestia.setBackground(new Color(53, 53, 53));
 
-
-
 		// Agregar botones de subir y bajar Bestias
 		botonesBestias.add(SubirBestia);
 		botonesBestias.add(BajarBestia);
@@ -231,14 +220,21 @@ public class MainGUI extends JFrame {
 		panelAcciones.setBorder(new EmptyBorder(0, 20, 5, 20));
 		panelAcciones.setLayout(new GridLayout(0, 1, 0, 0));
 
-		// Boton que abrira una ventana para añadir un personaje
+		// Boton que abre una ventana para añadir un personaje
 		newPJ = new JButton("Añadir PJ");
 		newPJ.setPreferredSize(new Dimension(10, 20));
 		newPJ.setForeground(new Color(187, 173, 124));
 		newPJ.setBackground(new Color(53, 53, 53));
 		panelAcciones.add(newPJ);
 
-		// Boton que iniciara la batalla
+		// Boton que elimina un perrsonaje seleccionado
+		eliminarPJ = new JButton("Eliminar PJ");
+		eliminarPJ.setPreferredSize(new Dimension(10, 20));
+		eliminarPJ.setForeground(new Color(187, 173, 124));
+		eliminarPJ.setBackground(new Color(53, 53, 53));
+		panelAcciones.add(eliminarPJ);
+
+		// Boton que inicia la batalla
 		luchar = new JButton("¡¡¡ A LUCHAR !!!");
 		luchar.setPreferredSize(new Dimension(10, 20));
 		luchar.setForeground(new Color(187, 173, 124));
@@ -258,7 +254,7 @@ public class MainGUI extends JFrame {
 		panelOpcJuego.setLayout(new GridLayout(1, 0, 0, 0));
 		panelOpcJuego.setBorder(new EmptyBorder(5, 80, 5, 80));
 
-		// Boton que abrira una ventana para camiar de mapa
+		// Boton que abre una ventana para camiar de mapa
 		mapas = new JButton("Mapas");
 		mapas.setBorder(null);
 		mapas.setBackground(new Color(53, 53, 53));
@@ -266,15 +262,14 @@ public class MainGUI extends JFrame {
 		panelOpcJuego.add(mapas);
 		panelOpcJuego.add(Box.createRigidArea(new Dimension(10, 0)));
 
-
-		// Pulsador que cambiara la velocidad de salida de la consola
+		// Pulsador que cambia la velocidad de salida de la consola
 		velocidad = new JToggleButton("X2");
 		velocidad.setBackground(new Color(53, 53, 53));
 		velocidad.setForeground(new Color(187, 173, 124));
 		panelOpcJuego.add(velocidad);
 		panelOpcJuego.add(Box.createRigidArea(new Dimension(10, 0)));
 
-		// Boton que abrira una ventana para camiar de musica
+		// Boton que abre una ventana para camiar de musica
 		musica = new JButton("♫");
 		musica.setBorder(null);
 		musica.setBackground(new Color(53, 53, 53));
@@ -289,14 +284,12 @@ public class MainGUI extends JFrame {
 		reiniciar.setForeground(new Color(187, 173, 124));
 		panelOpcJuego.add(reiniciar);
 
-		// Panel donde se expondra el mapa
+		// Panel donde se expone el mapa
 		panelMapa = new JPanel();
 		panelMapa.setBackground(new Color(53, 53, 53));
 		panelMapa.setLayout(new BorderLayout(0, 0));
 		panelMapa.setBorder(new EmptyBorder(10, 70, 10, 70));
 		panelAuxIzquierda.add(panelMapa, BorderLayout.CENTER);
-		
-
 
 		// Panel para la consola
 		JPanel panelConsola = new JPanel();
@@ -318,7 +311,8 @@ public class MainGUI extends JFrame {
 
 		// Cargar los ejercitos iniciales
 		actualizarListas();
-		textArea.setText("=== SISTEMA LISTO ===\n\nPrepara tus ejércitos y presiona '¡¡¡ A LUCHAR !!!' para comenzar la batalla.\n");
+		textArea.setText(
+				"=== SISTEMA LISTO ===\n\nPrepara tus ejércitos y presiona '¡¡¡ A LUCHAR !!!' para comenzar la batalla.\n");
 
 		// Cargar mapa por defecto
 		cargarMapaPorDefecto();
@@ -330,16 +324,16 @@ public class MainGUI extends JFrame {
 	private void configurarListeners() {
 		// Listener para el botón de Luchar
 		luchar.addActionListener(e -> iniciarBatalla());
-		
+
 		// Listener para el toggle de velocidad
 		velocidad.addActionListener(e -> {
-		    if (velocidad.isSelected()) {
-		        velocidad.setText("X1");
-		        modoLento = true;
-		    } else {
-		        velocidad.setText("X2");
-		        modoLento = false;
-		    }
+			if (velocidad.isSelected()) {
+				velocidad.setText("X1");
+				modoLento = true;
+			} else {
+				velocidad.setText("X2");
+				modoLento = false;
+			}
 		});
 
 		// Listeners para subir/bajar heroes
@@ -352,7 +346,6 @@ public class MainGUI extends JFrame {
 			}
 		});
 
-		
 		BajarHeroe.addActionListener(e -> {
 			int indice = listaHeroes.getSelectedIndex();
 			if (indice >= 0 && indice < controlador.getEjercitoHeroes().getEjercito().size() - 1) {
@@ -389,12 +382,15 @@ public class MainGUI extends JFrame {
 
 		// Listeners para abrir la ventana de musica
 		musica.addActionListener(e -> abrirVentanaMusica());
-		
+
 		// Listeners para abrir la ventana de mapas
 		mapas.addActionListener(e -> abrirVentanaMapas());
+
+		// Listener para eliminar personajes
+		eliminarPJ.addActionListener(e -> eliminarPersonajeSeleccionado());
+
 	}
-	
-	
+
 	/**
 	 * Abre una ventana para añadir un nuevo personaje
 	 */
@@ -403,9 +399,9 @@ public class MainGUI extends JFrame {
 		JDialog dialogoNuevo = new JDialog(this, "CREAR NUEVO PERSONAJE", true);
 		dialogoNuevo.setSize(400, 300);
 		AgregarPersonaje dialogo = new AgregarPersonaje(this, controlador, this::actualizarListas);
-	    dialogo.setVisible(true);
+		dialogo.setVisible(true);
 	}
-	
+
 	/**
 	 * Intercambia dos personajes dentro de un ejercito
 	 */
@@ -413,6 +409,66 @@ public class MainGUI extends JFrame {
 		Personaje temp = ejercito.get(indice1);
 		ejercito.set(indice1, ejercito.get(indice2));
 		ejercito.set(indice2, temp);
+	}
+
+	private void eliminarPersonajeSeleccionado() {
+		// Verificar si hay un héroe seleccionado
+		int indiceHeroe = listaHeroes.getSelectedIndex();
+
+		// Verificar si hay una bestia seleccionada
+		int indiceBestia = listaBestias.getSelectedIndex();
+
+		// Validar que solo haya una selección
+		if (indiceHeroe >= 0 && indiceBestia >= 0) {
+			JOptionPane.showMessageDialog(this, "Por favor, selecciona solo un personaje de una lista.",
+					"Selección múltiple", JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+
+		// Verificar que al menos haya una seleccion
+		if (indiceHeroe < 0 && indiceBestia < 0) {
+			JOptionPane.showMessageDialog(this, "Por favor, selecciona un personaje de alguna lista para eliminar.",
+					"Sin selección", JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+
+		// Eliminar heroe si está seleccionado
+		if (indiceHeroe >= 0) {
+			Personaje personajeAEliminar = controlador.getEjercitoHeroes().getEjercito().get(indiceHeroe);
+
+			// Confirmar eliminacion
+			int confirmacion = JOptionPane.showConfirmDialog(this,
+					"¿Estás seguro de eliminar a " + personajeAEliminar.getNombre() + "?", "Confirmar eliminación",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+			if (confirmacion == JOptionPane.YES_OPTION) {
+				controlador.getEjercitoHeroes().getEjercito().remove(indiceHeroe);
+				actualizarListas();
+
+				JOptionPane.showMessageDialog(this,
+						"¡" + personajeAEliminar.getNombre() + " ha sido eliminado del ejército de Héroes!",
+						"Héroe eliminado", JOptionPane.INFORMATION_MESSAGE);
+			}
+		}
+
+		// Eliminar bestia si esta seleccionada
+		if (indiceBestia >= 0) {
+			Personaje personajeAEliminar = controlador.getEjercitoBestias().getEjercito().get(indiceBestia);
+
+			// Confirmar eliminacion
+			int confirmacion = JOptionPane.showConfirmDialog(this,
+					"¿Estás seguro de eliminar a " + personajeAEliminar.getNombre() + "?", "Confirmar eliminación",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+			if (confirmacion == JOptionPane.YES_OPTION) {
+				controlador.getEjercitoBestias().getEjercito().remove(indiceBestia);
+				actualizarListas();
+
+				JOptionPane.showMessageDialog(this,
+						"¡" + personajeAEliminar.getNombre() + " ha sido eliminado del ejército de Bestias!",
+						"Bestia eliminada", JOptionPane.INFORMATION_MESSAGE);
+			}
+		}
 	}
 
 	/**
@@ -443,7 +499,7 @@ public class MainGUI extends JFrame {
 	/**
 	 * Reinicia las listas de heroes y bestias
 	 */
-	private void reiniciarListas() {		
+	private void reiniciarListas() {
 		// Limpiar modelos
 		modeloHeroes.clear();
 		modeloBestias.clear();
@@ -469,97 +525,95 @@ public class MainGUI extends JFrame {
 		JDialog dialogoMusica = new JDialog(this, "SELECCIONAR MÚSICA", true);
 		dialogoMusica.setSize(400, 450);
 		SeleccionarMusica dialogo = new SeleccionarMusica(this, controladorMusica);
-	    dialogo.setVisible(true);
-		}
-		
+		dialogo.setVisible(true);
+	}
+
 	/**
 	 * Abre una ventana para seleccionar el mapa de fondo
 	 */
 	private void abrirVentanaMapas() {
-	    // JDialog para seleccionar mapa
+		// JDialog para seleccionar mapa
 		SeleccionarMapa dialogo = new SeleccionarMapa(this, () -> {
-	        // Este callback se ejecuta ANTES de que se cierre el diálogo
-	        // No podemos obtener la ruta aquí
-	    });
-	    dialogo.setVisible(true);
-	    
-	    // Después de que se cierra el diálogo, obtenemos la ruta
-	    try {
-	        String rutaMapa = dialogo.getRutaMapaSeleccionado();
-	        aplicarMapaDeFondo(rutaMapa);
-	        rutaMapaActual = rutaMapa;
-	    } catch (Exception e) {
-	        System.err.println("Error al aplicar el mapa: " + e.getMessage());
-	    }
+			// Este callback se ejecuta ANTES de que se cierre el diálogo
+			// No podemos obtener la ruta aquí
+		});
+		dialogo.setVisible(true);
+
+		// Después de que se cierra el diálogo, obtenemos la ruta
+		try {
+			String rutaMapa = dialogo.getRutaMapaSeleccionado();
+			aplicarMapaDeFondo(rutaMapa);
+			rutaMapaActual = rutaMapa;
+		} catch (Exception e) {
+			System.err.println("Error al aplicar el mapa: " + e.getMessage());
+		}
 	}
+
 	/**
 	 * Aplica una imagen de fondo al panel del mapa
 	 */
 	private void aplicarMapaDeFondo(String rutaImagen) {
-	    try {
-	        // Crear un JLabel con la imagen de fondo
-	        JLabel lblFondo = new JLabel() {
-	            private javax.swing.ImageIcon icon = new javax.swing.ImageIcon(rutaImagen);
-	            
-	            @Override
-	            protected void paintComponent(java.awt.Graphics g) {
-	                super.paintComponent(g);
-	                java.awt.Image img = icon.getImage();
-	                g.drawImage(img, 0, 0, getWidth(), getHeight(), this);
-	            }
-	        };
-	        
-	        lblFondo.setLayout(new BorderLayout());
-	        
-	        // Crear panel para la consola con transparencia
-	        JPanel panelConsolaTransparente = new JPanel();
-	        panelConsolaTransparente.setLayout(new GridLayout(1, 0, 0, 0));
-	        panelConsolaTransparente.setOpaque(false);
-	        
-	        // Hacer el textArea semitransparente para ver el fondo
-	        textArea.setOpaque(false);
-	        textArea.setBackground(new Color(255, 255, 255, 200)); // Blanco con 200 de opacidad
-	        textArea.setFont(new Font("Arial", Font.BOLD, 14));
-	        textArea.setForeground(Color.white);
-	        
-	        
-	        // Crear un nuevo JScrollPane
-	        JScrollPane scrollConsola = new JScrollPane(textArea);
-	        scrollConsola.setBorder(null);
-	        scrollConsola.setOpaque(false);
-	        scrollConsola.getViewport().setOpaque(false);
-	        
-	        panelConsolaTransparente.add(scrollConsola);
-	        lblFondo.add(panelConsolaTransparente, BorderLayout.CENTER);
-	        
-	        // Limpiar y actualizar el panelMapa
-	        panelMapa.removeAll();
-	        panelMapa.setLayout(new BorderLayout());
-	        panelMapa.add(lblFondo, BorderLayout.CENTER);
-	        
-	        panelMapa.revalidate();
-	        
-	    } catch (Exception e) {
-	        throw new RuntimeException("Error al cargar la imagen: " + e.getMessage());
-	    }
+		try {
+			// Crear un JLabel con la imagen de fondo
+			JLabel lblFondo = new JLabel() {
+				private javax.swing.ImageIcon icon = new javax.swing.ImageIcon(rutaImagen);
+
+				@Override
+				protected void paintComponent(java.awt.Graphics g) {
+					super.paintComponent(g);
+					java.awt.Image img = icon.getImage();
+					g.drawImage(img, 0, 0, getWidth(), getHeight(), this);
+				}
+			};
+
+			lblFondo.setLayout(new BorderLayout());
+
+			// Crear panel para la consola con transparencia
+			JPanel panelConsolaTransparente = new JPanel();
+			panelConsolaTransparente.setLayout(new GridLayout(1, 0, 0, 0));
+			panelConsolaTransparente.setOpaque(false);
+
+			// Hacer el textArea semitransparente para ver el fondo
+			textArea.setOpaque(false);
+			textArea.setBackground(new Color(255, 255, 255, 200)); // Blanco con 200 de opacidad
+			textArea.setFont(new Font("Arial", Font.BOLD, 14));
+			textArea.setForeground(Color.white);
+
+			// Crear un nuevo JScrollPane
+			JScrollPane scrollConsola = new JScrollPane(textArea);
+			scrollConsola.setBorder(null);
+			scrollConsola.setOpaque(false);
+			scrollConsola.getViewport().setOpaque(false);
+
+			panelConsolaTransparente.add(scrollConsola);
+			lblFondo.add(panelConsolaTransparente, BorderLayout.CENTER);
+
+			// Limpiar y actualizar el panelMapa
+			panelMapa.removeAll();
+			panelMapa.setLayout(new BorderLayout());
+			panelMapa.add(lblFondo, BorderLayout.CENTER);
+
+			panelMapa.revalidate();
+
+		} catch (Exception e) {
+			throw new RuntimeException("Error al cargar la imagen: " + e.getMessage());
+		}
 	}
-	
+
 	/**
 	 * Carga un mapa por defecto al iniciar la aplicación
 	 */
 	private void cargarMapaPorDefecto() {
-	    String rutaMapaDefecto = "src/fondos/default.jpg";
-	    
-	    try {
-	        aplicarMapaDeFondo(rutaMapaDefecto);
-	        rutaMapaActual = rutaMapaDefecto;
-	    } catch (Exception e) {
-	        System.err.println("No se pudo cargar el mapa por defecto: " + e.getMessage());
-	        // Si falla, continuar sin mapa
-	    }
+		String rutaMapaDefecto = "src/fondos/default.jpg";
+
+		try {
+			aplicarMapaDeFondo(rutaMapaDefecto);
+			rutaMapaActual = rutaMapaDefecto;
+		} catch (Exception e) {
+			System.err.println("No se pudo cargar el mapa por defecto: " + e.getMessage());
+			// Si falla, continuar sin mapa
+		}
 	}
-	
-	
 
 	/**
 	 * Inicia la batalla
@@ -568,61 +622,60 @@ public class MainGUI extends JFrame {
 		textArea.setText("=== PREPARANDO BATALLA ===\n\n");
 
 		// Deshabilitar botones durante la batalla
-	    luchar.setEnabled(false);
-	    newPJ.setEnabled(false);
-	    SubirHeroe.setEnabled(false);
-	    BajarHeroe.setEnabled(false);
-	    SubirBestia.setEnabled(false);
-	    BajarBestia.setEnabled(false);
-	    velocidad.setEnabled(false);
-	    reiniciar.setEnabled(false);
-	    
-	    // Ejecutar la batalla en un hilo separado
-	    new Thread(() -> {
-	        String resultadoBatalla = controlador.iniciarBatalla();
-	        
-	        // Mostrar el texto con animación
-	        escribirTextoAnimado(resultadoBatalla);
-	        
-	        // Actualizar las listas después de la batalla
-	        javax.swing.SwingUtilities.invokeLater(() -> {
-	            actualizarListas();
-	            textArea.setCaretPosition(textArea.getDocument().getLength());
-	            
-	            // Rehabilitar botones
-	            luchar.setEnabled(true);
-	    	    newPJ.setEnabled(true);
-	    	    SubirHeroe.setEnabled(true);
-	    	    BajarHeroe.setEnabled(true);
-	    	    SubirBestia.setEnabled(true);
-	    	    BajarBestia.setEnabled(true);
-	    	    velocidad.setEnabled(true);
-	    	    reiniciar.setEnabled(true);
-	        });
-	    }).start();
+		luchar.setEnabled(false);
+		newPJ.setEnabled(false);
+		SubirHeroe.setEnabled(false);
+		BajarHeroe.setEnabled(false);
+		SubirBestia.setEnabled(false);
+		BajarBestia.setEnabled(false);
+		velocidad.setEnabled(false);
+		reiniciar.setEnabled(false);
+
+		// Ejecutar la batalla en un hilo separado
+		new Thread(() -> {
+			String resultadoBatalla = controlador.iniciarBatalla();
+
+			// Mostrar el texto con animación
+			escribirTextoAnimado(resultadoBatalla);
+
+			// Actualizar las listas después de la batalla
+			javax.swing.SwingUtilities.invokeLater(() -> {
+				actualizarListas();
+				textArea.setCaretPosition(textArea.getDocument().getLength());
+
+				// Rehabilitar botones
+				luchar.setEnabled(true);
+				newPJ.setEnabled(true);
+				SubirHeroe.setEnabled(true);
+				BajarHeroe.setEnabled(true);
+				SubirBestia.setEnabled(true);
+				BajarBestia.setEnabled(true);
+				velocidad.setEnabled(true);
+				reiniciar.setEnabled(true);
+			});
+		}).start();
 	}
-	
+
 	/**
 	 * Escribe texto en el textArea con efecto de animación
 	 */
 	private void escribirTextoAnimado(String texto) {
-	    textArea.setText("");
-	    int delay = modoLento ? DELAY_LENTO : DELAY_RAPIDO;
-	    
-	    for (int i = 0; i < texto.length(); i++) {
-	        final char c = texto.charAt(i);
-	        javax.swing.SwingUtilities.invokeLater(() -> {
-	            textArea.append(String.valueOf(c));
-	            textArea.setCaretPosition(textArea.getDocument().getLength());
-	        });
-	        
-	        try {
-	            Thread.sleep(delay);
-	        } catch (InterruptedException e) {
-	            Thread.currentThread().interrupt();
-	            break;
-	        }
-	    }
+		textArea.setText("");
+		int delay = modoLento ? DELAY_LENTO : DELAY_RAPIDO;
+
+		for (int i = 0; i < texto.length(); i++) {
+			final char c = texto.charAt(i);
+			javax.swing.SwingUtilities.invokeLater(() -> {
+				textArea.append(String.valueOf(c));
+				textArea.setCaretPosition(textArea.getDocument().getLength());
+			});
+
+			try {
+				Thread.sleep(delay);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+				break;
+			}
+		}
 	}
 }
-

@@ -31,7 +31,7 @@ public class Elfo extends Heroe {
 	 */
 	public int rabia(Personaje bestia) {
 		if (bestia instanceof Orco) {
-			ultimoMensaje = "+ 10 por odio ancestral hacia Orco";
+			ultimoMensaje = "El Elfo inflige + 10 por odio ancestral hacia Orco";
 			return 10;
 		} else {
 			ultimoMensaje = "";

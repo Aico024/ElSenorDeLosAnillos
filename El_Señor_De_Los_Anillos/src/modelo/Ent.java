@@ -1,13 +1,13 @@
 package modelo;
 
-public class Humano extends Heroe {
+public class Ent extends Heroe{
 	private String ultimoMensaje = "";
 
-	public Humano(String nombre, int p_Vida, int nivelArmadura) {
+	public Ent(String nombre, int p_Vida, int nivelArmadura) {
 		super(nombre, p_Vida, nivelArmadura);
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	/**
 	 * Calcula los puntos de daño
 	 * 
@@ -17,20 +17,21 @@ public class Humano extends Heroe {
 	public int atacar(Personaje bestia) {
 		int dado1 = (int) (Math.random() * 101);
 		int dado2 = (int) (Math.random() * 101);
-		int potencia = dado1 + dado2 + valentia(bestia);
+		int aplasta = aplastar(bestia);
+		int potencia = dado1 + dado2 + aplasta;
 		return potencia;
 	}
 
 	/**
-	 * Suma 15 de p_Daño si los p_Vida de la bestia son mayor o igual a 80
+	 * Suma +20 de p_Daño si los p_Vida de la bestia son menor o igual a 45
 	 * 
 	 * @param bestia
-	 * @return 15, sino 0
+	 * @return 20, sino 0
 	 */
-	public int valentia(Personaje bestia) {
-		if (bestia.getP_Vida() >= 80) {
-			ultimoMensaje = ("El Humano inflige +15 de P.Daño por valentia ante fuertes");
-			return 15;
+	public int aplastar(Personaje bestia) {
+		if (bestia.getP_Vida() <= 45) {
+			ultimoMensaje = ("El Ent inflige +20 de P.Daño por bestia débil");
+			return 20;
 		} else {
 			ultimoMensaje = ("");
 			return 0;

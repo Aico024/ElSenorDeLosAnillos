@@ -29,7 +29,7 @@ public class Hobbit extends Heroe {
 	 */
 	public int miedo(Personaje bestia) {
 		if (bestia instanceof Trasgo) {
-			ultimoMensaje = ("-5 de P.Daño por miedo a Trasgos");
+			ultimoMensaje = ("El Hobbit inflige -5 de P.Daño por miedo a Trasgos");
 			return 5;
 		} else {
 			ultimoMensaje = ("");

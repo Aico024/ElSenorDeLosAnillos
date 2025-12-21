@@ -71,30 +71,17 @@ public class AgregarPersonaje extends JDialog {
 		txtNombre.setForeground(new Color(187, 173, 124));
 		txtNombre.setBackground(new Color(53, 53, 53));
 
-
 		JLabel lblVida = new JLabel("Vida:");
 		lblVida.setForeground(new Color(187, 173, 124));
 		txtVida = new JTextField("100");
 		txtVida.setForeground(new Color(187, 173, 124));
 		txtVida.setBackground(new Color(53, 53, 53));
 
-		
-
 		JLabel lblArmadura = new JLabel("Armadura:");
 		lblArmadura.setForeground(new Color(187, 173, 124));
 		txtArmadura = new JTextField("30");
 		txtArmadura.setForeground(new Color(187, 173, 124));
 		txtArmadura.setBackground(new Color(53, 53, 53));
-
-
-		JLabel lblTipo = new JLabel("Tipo:");
-		lblTipo.setForeground(new Color(187, 173, 124));
-		String[] tipos = { "Elfo", "Humano", "Hobbit", "Orco", "Trasgo" };
-		comboTipo = new JComboBox<>(tipos);
-		comboTipo.setForeground(new Color(187, 173, 124));
-		comboTipo.setBackground(new Color(53, 53, 53));
-		comboTipo.setBorder(null);
-
 
 		JLabel lblBando = new JLabel("Bando:");
 		lblBando.setForeground(new Color(187, 173, 124));
@@ -104,6 +91,13 @@ public class AgregarPersonaje extends JDialog {
 		comboBando.setBackground(new Color(53, 53, 53));
 		comboBando.setBorder(null);
 
+		JLabel lblTipo = new JLabel("Tipo:");
+		lblTipo.setForeground(new Color(187, 173, 124));
+		String[] tipos = { "Elfo", "Humano", "Hobbit", "Orco", "Trasgo" };
+		comboTipo = new JComboBox<>(tipos);
+		comboTipo.setForeground(new Color(187, 173, 124));
+		comboTipo.setBackground(new Color(53, 53, 53));
+		comboTipo.setBorder(null);
 
 		// Añadir componentes al panel
 		panelPrincipal.add(lblNombre);
@@ -112,21 +106,21 @@ public class AgregarPersonaje extends JDialog {
 		panelPrincipal.add(txtVida);
 		panelPrincipal.add(lblArmadura);
 		panelPrincipal.add(txtArmadura);
-		panelPrincipal.add(lblTipo);
-		panelPrincipal.add(comboTipo);
 		panelPrincipal.add(lblBando);
 		panelPrincipal.add(comboBando);
+		panelPrincipal.add(lblTipo);
+		panelPrincipal.add(comboTipo);
+		
 
 		// Panel de botones
 		JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
 		panelBotones.setBackground(new Color(53, 53, 53));
-		
+
 		JButton btnAceptar = new JButton("Añadir");
 		btnAceptar.setForeground(new Color(187, 173, 124));
 		btnAceptar.setBackground(new Color(53, 53, 53));
 		btnAceptar.setBorder(null);
 
-		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.setForeground(new Color(187, 173, 124));
 		btnCancelar.setBackground(new Color(53, 53, 53));
@@ -153,7 +147,7 @@ public class AgregarPersonaje extends JDialog {
 	}
 
 	/**
-	 * Actualiza los tipos disponibles según el bando seleccionado
+	 * Actualiza los tipos disponibles segun el bando seleccionado
 	 */
 	private void actualizarTiposDisponibles() {
 		String bandoSeleccionado = (String) comboBando.getSelectedItem();
@@ -163,14 +157,21 @@ public class AgregarPersonaje extends JDialog {
 			comboTipo.addItem("Elfo");
 			comboTipo.addItem("Humano");
 			comboTipo.addItem("Hobbit");
+			comboTipo.addItem("Ent");
+			comboTipo.addItem("Dunedain");
+
 		} else {
 			comboTipo.addItem("Orco");
 			comboTipo.addItem("Trasgo");
+			comboTipo.addItem("UrukHai");
+			comboTipo.addItem("Nazgul");
+			comboTipo.addItem("Troll");
+
 		}
 	}
 
 	/**
-	 * Agrega el personaje al ejército correspondiente
+	 * Agrega el personaje al ejercito correspondiente
 	 */
 	private void agregarPersonaje() {
 		try {
@@ -227,8 +228,8 @@ public class AgregarPersonaje extends JDialog {
 	 */
 	private Personaje crearPersonaje(String tipo, String nombre, int vida, int armadura, boolean esHeroe) {
 		// Validar que el tipo corresponda al bando
-		boolean esTipoHeroe = tipo.equals("Elfo") || tipo.equals("Humano") || tipo.equals("Hobbit");
-		boolean esTipoBestia = tipo.equals("Orco") || tipo.equals("Trasgo");
+		boolean esTipoHeroe = tipo.equals("Elfo") || tipo.equals("Humano") || tipo.equals("Hobbit")|| tipo.equals("Ent")|| tipo.equals("Dunedain");
+		boolean esTipoBestia = tipo.equals("Orco") || tipo.equals("Trasgo") || tipo.equals("UrukHai") || tipo.equals("Nazgul") || tipo.equals("Troll");
 
 		if (esHeroe && !esTipoHeroe) {
 			JOptionPane.showMessageDialog(this,
@@ -252,10 +253,20 @@ public class AgregarPersonaje extends JDialog {
 			return new Humano(nombre, vida, armadura);
 		case "Hobbit":
 			return new Hobbit(nombre, vida, armadura);
+		case "Ent":
+			return new Ent(nombre, vida, armadura);
+		case "Dunedain":
+			return new Dunedain(nombre, vida, armadura);
 		case "Orco":
 			return new Orco(nombre, vida, armadura);
 		case "Trasgo":
 			return new Trasgo(nombre, vida, armadura);
+		case "UrukHai":
+			return new UrukHai(nombre, vida, armadura);
+		case "Nazgul":
+			return new Nazgul(nombre, vida, armadura);
+		case "Troll":
+			return new Troll(nombre, vida, armadura);
 		default:
 			return null;
 		}

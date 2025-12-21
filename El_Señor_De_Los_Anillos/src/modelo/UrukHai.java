@@ -1,12 +1,14 @@
 package modelo;
 
-public class Orco extends Bestia {
+public class UrukHai extends Bestia{
 	private String ultimoMensaje = "";
-	public Orco(String nombre, int p_Vida, int nivelArmadura) {
+
+
+	public UrukHai(String nombre, int p_Vida, int nivelArmadura) {
 		super(nombre, p_Vida, nivelArmadura);
 		// TODO Auto-generated constructor stub
 	}
-
+	
 	/**
 	 * Calcula los puntos de daño
 	 * 
@@ -15,7 +17,7 @@ public class Orco extends Bestia {
 	@Override
 	public int atacar(Personaje heroe) {
 		int dado1 = (int) (Math.random() * 91);
-		int potencia = dado1 + fuerza(heroe);
+		int potencia = dado1 + consumir();
 		return potencia;
 	}
 
@@ -25,15 +27,19 @@ public class Orco extends Bestia {
 	 * @param heroe
 	 * @return 10% de la armadura del heroe
 	 */
-	public int fuerza(Personaje heroe) {
-		int aux = 0;
-		aux = (heroe.getNivelArmadura() / 10);
-		ultimoMensaje =("El orco hace + " + aux + " (10% de P.Armadura del heroe) por fuerza bruta");//solo en este turno
-		return aux;
+	public int consumir() {
+		if (this.getP_Vida() < 5) {
+			this.recibirDaño(5);
+			ultimoMensaje = "El Huruk-Hai consume 5 puntos de vida y los comvierte en + 5 de vida";
+			return 5;
+		} else {
+			return 0;
+		}
 	}
 	
 	public String getUltimoMensaje() {
 		return ultimoMensaje;
 	}
+
 
 }
